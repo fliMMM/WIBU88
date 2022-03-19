@@ -13,12 +13,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
-  username: yup.string().required("Khong duoc de trong"),
+  username: yup.string().required("Bạn chưa nhập tài khoản!"),
 
   password: yup
     .string()
-    .min(8, "Mat khau toi thieu 8 ki tu")
-    .required("Khong duoc de trong!"),
+    .required("Bạn chưa nhập mật khẩu!"),
 });
 
 function DangNhap() {
@@ -45,10 +44,10 @@ function DangNhap() {
       >
         <Paper
           elevation={4}
-          style={{ padding: "20px 15px", marginTop: "30px" }}
+          style={{ padding: "20px 40px", marginTop: "30px" }}
         >
-          <Typography variant="headline" gutterBottom>
-            SignIn
+          <Typography variant="h3" textAlign={"center"} height={"30px"} gutterBottom>
+            Sign In
           </Typography>
           <form onSubmit={formik.handleSubmit}>
             <FormControl fullWidth margin="normal">
@@ -62,7 +61,7 @@ function DangNhap() {
                 }
                 onChange={formik.handleChange}
               />
-              <FormHelperText id="username">
+              <FormHelperText error id="username">
                 {formik.touched.username && formik.errors.username}
               </FormHelperText>
             </FormControl>
@@ -78,7 +77,7 @@ function DangNhap() {
                   formik.touched.password && Boolean(formik.errors.password)
                 }
               />
-              <FormHelperText id="password">
+              <FormHelperText error id="password">
                 {formik.touched.password && formik.errors.password}
               </FormHelperText>
             </FormControl>
