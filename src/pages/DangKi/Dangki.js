@@ -7,16 +7,18 @@ import {
   Paper,
   Grid,
   Typography,
-  Form,
   FormHelperText,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
 } from "@mui/material";
+import { Login, Visibility, VisibilityOff } from '@mui/icons-material';
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
 const validationSchema = yup.object({
-  username: yup
-    .string()
-    .required("Bạn chưa nhập tài khoản!"),
+  username: yup.string().required("Bạn chưa nhập tài khoản!"),
   email: yup
     .string()
     .email("Email không đúng định dạng!")
@@ -37,6 +39,13 @@ const validationSchema = yup.object({
     .required("Bạn chưa điền mật khẩu xác nhận!"),
 });
 function DangKi() {
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -65,17 +74,21 @@ function DangKi() {
           elevation={4}
           style={{ padding: "20px 15px", marginTop: "30px" }}
         >
-          <Typography textAlign={"center"} height={"30px"} variant="h3" gutterBottom>
-            Sign Up
+          <Typography
+            textAlign={"center"}
+            height={"30px"}
+            variant="h5"
+            gutterBottom
+          >
+            Đăng Kí
           </Typography>
           <form onSubmit={formik.handleSubmit}>
             <FormControl fullWidth margin="normal">
-              <InputLabel>Username</InputLabel>
+              <InputLabel>Tên đăng nhập</InputLabel>
               <Input
                 name="username"
                 fullWidth
                 id="username"
-                
                 error={
                   formik.touched?.username && Boolean(formik.errors?.username)
                 }
@@ -99,7 +112,7 @@ function DangKi() {
               </FormHelperText>
             </FormControl>
             <FormControl fullWidth margin="normal">
-              <InputLabel>Address</InputLabel>
+              <InputLabel>Địa chỉ</InputLabel>
               <Input
                 name="address"
                 fullWidth
@@ -108,13 +121,24 @@ function DangKi() {
               />
             </FormControl>
             <FormControl fullWidth margin="normal">
-              <InputLabel>Password</InputLabel>
+              <InputLabel>Mật khẩu</InputLabel>
               <Input
                 fullWidth
                 name="password"
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 id="password"
                 onChange={formik.handleChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
                 error={
                   formik.touched.password && Boolean(formik.errors.password)
                 }
@@ -124,13 +148,24 @@ function DangKi() {
               </FormHelperText>
             </FormControl>
             <FormControl fullWidth margin="normal">
-              <InputLabel>Confirm Password</InputLabel>
+              <InputLabel>Xác nhận lại mật khẩu</InputLabel>
               <Input
                 fullWidth
                 name="confirmPassword"
-                type="password"
+                type={showConfirmPassword ? 'text' : 'password'}
                 id="confirmPassword"
                 onChange={formik.handleChange}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      edge="end"
+                    >
+                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
                 error={
                   formik.touched.confirmPassword &&
                   Boolean(formik.errors.confirmPassword)
@@ -142,8 +177,19 @@ function DangKi() {
               </FormHelperText>
             </FormControl>
             <FormControl fullWidth margin="normal">
-              <Button variant="extendedFab" color="primary" type="submit">
-                Signup
+              <Button
+                style={{ backgroundColor: "#d1cbcb" }}
+                variant="extendedFab"
+                type="submit"
+                startIcon={
+                  loading ? (
+                    <CircularProgress size={16} style={{ color: '#fff' }} />
+                  ) : (
+                    <Login />
+                  )
+                }
+              >
+                Đăng kí
               </Button>
             </FormControl>
           </form>

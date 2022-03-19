@@ -2,7 +2,9 @@ import React from "react";
 import { Nav, NavLink, Bars, NavMenu, NavBtnLink } from "./style";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 const Header = () => {
+  const user = true;
   return (
+    
     <>
       <Nav>
         <NavLink to="/">
@@ -17,13 +19,13 @@ const Header = () => {
           <NavLink to="/cart" activestyle="true">
             <ShoppingCartOutlinedIcon/>Giỏ hàng
           </NavLink>
-          <NavLink to="/user-profile" activestyle="true">
-            User Account
-          </NavLink>
-          <NavLink to="/sign-up" activestyle="true">
+          {user && <NavLink to="/user-profile" activestyle="true">
+            Vua Lì đòn
+          </NavLink>}
+          {!user && <NavLink to="/sign-up" activestyle="true">
             Sign Up
-          </NavLink>
-          <NavBtnLink to="/sign-in">Sign In</NavBtnLink>
+          </NavLink>}
+          {!user && <NavBtnLink to="/sign-in">Sign In</NavBtnLink>}
         </NavMenu>
       </Nav>
     </>
