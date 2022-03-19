@@ -2,7 +2,7 @@ import React from "react";
 import { Nav, NavLink, Bars, NavMenu, NavBtnLink } from "./style";
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 const Header = () => {
-  const user = true;
+  const user = false;
   return (
     
     <>
