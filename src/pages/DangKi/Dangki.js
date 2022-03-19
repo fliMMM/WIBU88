@@ -80,7 +80,7 @@ function DangKi() {
             variant="h5"
             gutterBottom
           >
-            Đăng Kí
+            Đăng Ký
           </Typography>
           <form onSubmit={formik.handleSubmit}>
             <FormControl fullWidth margin="normal">

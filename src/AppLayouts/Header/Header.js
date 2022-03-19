@@ -17,15 +17,15 @@ const Header = () => {
         <Bars />
         <NavMenu>
           <NavLink to="/cart" activestyle="true">
-            <ShoppingCartOutlinedIcon/>Giỏ hàng
+            <ShoppingCartOutlinedIcon style={{marginRight: "5px"}}/>Giỏ Hàng
           </NavLink>
           {user && <NavLink to="/user-profile" activestyle="true">
             Vua Lì đòn
           </NavLink>}
           {!user && <NavLink to="/sign-up" activestyle="true">
-            Sign Up
+            Đăng Ký
           </NavLink>}
-          {!user && <NavBtnLink to="/sign-in">Sign In</NavBtnLink>}
+          {!user && <NavBtnLink to="/sign-in">Đăng Nhập</NavBtnLink>}
         </NavMenu>
       </Nav>
     </>
