@@ -12,6 +12,7 @@ import {
   IconButton,
   InputAdornment,
 } from "@mui/material";
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { Login, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -24,6 +25,9 @@ const validationSchema = yup.object({
 });
 
 function DangNhap() {
+
+  const isMobile = useMediaQuery('(min-width:450px)');
+
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -107,7 +111,9 @@ function DangNhap() {
             <FormControl fullWidth margin="normal">
               <Button
                 variant="extendedFab"
-                style={{ backgroundColor: "#d1cbcb" }}
+                style={{ backgroundColor: "#d1cbcb",
+                width: !isMobile ? "150px" : " "
+              }}
                 type="submit"
                 startIcon={
                   loading ? (
