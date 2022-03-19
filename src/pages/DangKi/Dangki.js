@@ -135,7 +135,7 @@ function DangKi() {
                       onClick={handleClickShowPassword}
                       edge="end"
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      {!showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -162,7 +162,7 @@ function DangKi() {
                       onClick={handleClickShowConfirmPassword}
                       edge="end"
                     >
-                      {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                      {!showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 }
