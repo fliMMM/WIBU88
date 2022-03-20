@@ -16,7 +16,7 @@ const Header = () => {
   }
 
   return (
-    <>
+    <div style={{position: "fixed", zIndex: 10000, width: "100%"}}>
       <Nav>
         <NavLink to="/">
           <img
@@ -71,7 +71,7 @@ const Header = () => {
           {!user && <NavBtnLink to="/sign-in">Đăng Nhập</NavBtnLink>}
         </NavMenu>
       </Nav>
-    </>
+    </div>
   );
 };
 
