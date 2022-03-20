@@ -14,13 +14,16 @@ function Cart() {
       setQuantity(quantity - 1);
     }
   };
-  const handleInput = (e) =>{
-    if(!e.target.value){  
-        setQuantity(0);
-    }else{
-      setQuantity(parseInt(e.target.value))
+  const handleInput = (e) => {
+    if (e.target.value === "") {
+      setQuantity(0);
+    } else {
+      const temp = parseInt(e.target.value);
+      if (temp !== NaN) {
+        setQuantity(temp);
+      }
     }
-  }
+  };
   return (
     <div className={styles.container}>
       {data.map((item, index) => {
@@ -37,7 +40,7 @@ function Cart() {
                 >
                   -
                 </Button>
-                <input value={quantity} onChange ={e=>handleInput(e)}/>
+                <input value={quantity} onChange={(e) => handleInput(e)} />
                 <Button
                   variant="contained"
                   color="success"
@@ -56,13 +59,17 @@ function Cart() {
           </div>
         );
       })}
-      <div style={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}>
-      <Button fullWidth color="success" variant="contained">Thanh Toán</Button>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button fullWidth color="success" variant="contained">
+          Thanh Toán
+        </Button>
       </div>
     </div>
   );
