@@ -52,7 +52,9 @@ function Cart() {
       <div style={{
         width: "100%",
         display: "flex",
-
+        justifyContent: "center",
+        alignItems: "center",
+        border: "1px solid red"
       }}>
       <Button fullWidth color="success" variant="contained">Thanh Toán</Button>
       </div>
