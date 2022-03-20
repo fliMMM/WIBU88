@@ -7,8 +7,8 @@ import {
   ImageList,
   ImageListItem,
   Box,
-  Link
-} from '@mui/material';
+  Link,
+} from "@mui/material";
 
 const imageBanner = [
   {
@@ -28,37 +28,32 @@ const imageBanner = [
 function Home() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
-    <div className={styles.container}>
+    <div>
       {!isMobile ? (
         <div className="slide-container">
           <Slide>
             {imageBanner.map((image, index) => (
               <div className="each-slide" key={index}>
-                <div
-                  style={{
-                    backgroundImage: `url(${image.url})`,
-                    height: "78vh",
-                  }}
-                ></div>
+                <img style={{ width: "100%" }} src={image?.url} />
               </div>
             ))}
           </Slide>
         </div>
       ) : (
         <Box>
-            <ImageList cols={1} gap={5} sx={{ m: 0 }}>
-              {imageBanner?.map((image, i) => (
-                <ImageListItem key={image.id + i}>
-                    <img
-                      style={{
-                        width: "100%",
-                      }}
-                      src={image?.url}
-                      alt={"Image Banner"}
-                    />
-                </ImageListItem>
-              ))}
-            </ImageList>
+          <ImageList cols={1} gap={5} sx={{ m: 0 }}>
+            {imageBanner?.map((image, i) => (
+              <ImageListItem key={image.id + i}>
+                <img
+                  style={{
+                    width: "100%",
+                  }}
+                  src={image?.url}
+                  alt={"Image Banner"}
+                />
+              </ImageListItem>
+            ))}
+          </ImageList>
         </Box>
       )}
     </div>
