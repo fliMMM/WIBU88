@@ -47,7 +47,7 @@ function DangNhap() {
     <Grid container justify="center" alignContent="center">
       <Grid
         item
-        xs={6}
+        xs={8}
         md={4}
         style={{
           margin: "50px auto",
