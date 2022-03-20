@@ -51,7 +51,7 @@ const Header = () => {
               Đăng Ký
             </Link>
           )}
-          {!user && <NavBtnLink to="/sign-in">Đăng Nhập</NavBtnLink>}
+          {!user && <Link to="/sign-in">Đăng Nhập</Link>}
         </div>: ""}
         <NavMenu >
           <NavLink to="/cart" activestyle="true">

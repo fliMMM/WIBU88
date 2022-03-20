@@ -178,7 +178,7 @@ function DangKi() {
             </FormControl>
             <FormControl fullWidth margin="normal">
               <Button
-                style={{ backgroundColor: "#d1cbcb" }}
+                style={{ backgroundColor: "#d1cbcb", margin : "0 auto" }}
                 variant="extendedFab"
                 type="submit"
                 startIcon={

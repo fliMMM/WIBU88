@@ -55,7 +55,7 @@ function DangNhap() {
       >
         <Paper
           elevation={4}
-          style={{ padding: "20px 40px", marginTop: "30px" }}
+          style={{ padding: "20px 30px", marginTop: "30px" }}
         >
           <Typography
             variant="h5"
@@ -112,7 +112,8 @@ function DangNhap() {
               <Button
                 variant="extendedFab"
                 style={{ backgroundColor: "#d1cbcb",
-                width: !isMobile ? "150px" : " "
+                width: !isMobile ? "143px" : " ",
+                margin : "0 auto"
               }}
                 type="submit"
                 startIcon={
