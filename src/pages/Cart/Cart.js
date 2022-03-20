@@ -1,7 +1,12 @@
 import React from "react";
 
 function Cart() {
-  return <h1>This is Cart page</h1>;
+  return(
+    <div style={{paddingTop: "50px"}}>
+      <h1>This is cart page</h1>
+    </div>
+
+  )
 }
 
 export default Cart;
