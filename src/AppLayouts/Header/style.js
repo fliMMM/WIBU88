@@ -62,4 +62,8 @@ export const NavBtnLink = styled(Link)`
     background: #fff;
     color: #010606;
   }
+
+  @media screen and (max-width: 768px) {
+    padding: 0 0 5px 0;
+  }
 `;
