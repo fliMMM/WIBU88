@@ -6,6 +6,8 @@ import DangKi from "./pages/DangKi/Dangki";
 import Cart from "./pages/Cart/Cart";
 import User from "./pages/UserAccount/User";
 import Home from "./pages/Home/Home";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
+
 function App() {
   return (
     <div>
@@ -17,6 +19,7 @@ function App() {
         <Route path="sign-in" element={<DangNhap />} />
         <Route path="cart" element={<Cart />} />
         <Route path="user-profile" element={<User />} />
+        <Route path="/products/:id" element={<ProductDetail />} />
       </Routes>
     </div>
   );

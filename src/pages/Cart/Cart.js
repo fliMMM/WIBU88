@@ -14,6 +14,13 @@ function Cart() {
       setQuantity(quantity - 1);
     }
   };
+  const handleInput = (e) =>{
+    if(!e.target.value){  
+        setQuantity(0);
+    }else{
+      setQuantity(parseInt(e.target.value))
+    }
+  }
   return (
     <div className={styles.container}>
       {data.map((item, index) => {
@@ -30,7 +37,7 @@ function Cart() {
                 >
                   -
                 </Button>
-                <p>{quantity}</p>
+                <input value={quantity} onChange ={e=>handleInput(e)}/>
                 <Button
                   variant="contained"
                   color="success"

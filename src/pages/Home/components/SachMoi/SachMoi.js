@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
 import { Typography, Button } from "@mui/material";
 import fakeData from "../../../../fakeData";
+import { Link } from "react-router-dom";
 
 function SachMoi() {
   return (
@@ -38,22 +39,22 @@ function SachMoi() {
           },
           1536: {
             slidesPerView: 5.5,
-            spaceBetween: 50,
+            spaceBetween: 70,
           },
         }}
         modules={[Navigation, Autoplay]}
         className="mySwiper"
       >
         {fakeData.map((data, index) => (
-          <SwiperSlide key={index} style={{cursor: "pointer"}}>
-            <img src={data.image} alt="picture" />
-            <Typography variant="h6">{data.name}</Typography>
-            <Typography color={"red"}>
-              {new Intl.NumberFormat("de-De", {
-                style: "currency",
-                currency: "VND",
-              }).format(data.price)}
-            </Typography>
+          <SwiperSlide key={index} style={{ cursor: "pointer" }}>
+              <img src={data.image} alt="picture" />
+              <Typography variant="h6">{data.name}</Typography>
+              <Typography color={"red"}>
+                {new Intl.NumberFormat("de-De", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(data.price)}
+              </Typography>
           </SwiperSlide>
         ))}
       </Swiper>
