@@ -18,7 +18,6 @@ function SachMoi() {
         Truyện mới cập nhật
       </Typography>
       <Swiper
-        spaceBetween={30}
         loop={true}
         loopFillGroupWithBlank={true}
         autoplay={{
@@ -27,8 +26,8 @@ function SachMoi() {
         }}
         breakpoints={{
             400: {
-              slidesPerView: 1.5,
-              spaceBetween: 20,
+              slidesPerView: 1.25,
+              spaceBetween: 50,
             },
             900: {
               slidesPerView: 3.5,
