@@ -17,6 +17,7 @@ function Cart() {
   const handleInput = (e) => {
     if (e.target.value === "") {
       setQuantity(0);
+      e.target.selectionStart++
     } else {
       const temp = parseInt(e.target.value);
       if (temp !== NaN) {
