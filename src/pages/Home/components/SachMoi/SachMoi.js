@@ -13,7 +13,7 @@ function SachMoi() {
     <>
       <Typography
         variant="h4"
-        style={{ textAlign: "center", margin: "10px 0" }}
+        style={{ textAlign: "center", margin: "30px 0 20px 0" }}
       >
         Truyện mới cập nhật
       </Typography>
@@ -21,7 +21,7 @@ function SachMoi() {
         loop={true}
         loopFillGroupWithBlank={true}
         autoplay={{
-          delay: 2500,
+          delay: 3000,
           disableOnInteraction: false,
         }}
         breakpoints={{

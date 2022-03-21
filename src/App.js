@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Header from "./AppLayouts/Header/Header";
+// import Footer from "./AppLayouts/Footer/Footer";
 import DangNhap from "./pages/DangNhap/Dangnhap";
 import DangKi from "./pages/DangKi/Dangki";
 import Cart from "./pages/Cart/Cart";
@@ -23,6 +24,7 @@ function App() {
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      {/* <Footer/> */}
     </div>
   );
 }

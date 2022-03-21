@@ -1,0 +1,15 @@
+.container{
+    width: 100%;
+    margin-top: 50px;
+    height: 342px;
+    background-color: rgb(152, 179, 202);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container h1{
+    cursor: pointer;
+    color: blue;
+    text-align: center;
+}
