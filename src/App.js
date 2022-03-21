@@ -16,7 +16,6 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route path="/WIBU88" element={<Home />} />
         <Route path="/" element={<Home />} />
         <Route path="sign-up" element={<DangKi />} />
         <Route path="sign-in" element={<DangNhap />} />

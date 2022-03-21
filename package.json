@@ -1,7 +1,6 @@
 {
   "name": "frontend",
   "version": "0.1.0",
-  "homepage": "https://darling-101.github.io/WIBU88/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.8.2",
