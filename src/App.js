@@ -9,6 +9,7 @@ import User from "./pages/UserAccount/User";
 import Home from "./pages/Home/Home";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import NotFound from "./pages/NotFound/NotFound";
+import Products from "./pages/Products/Products";
 
 function App() {
   return (
@@ -21,7 +22,8 @@ function App() {
         <Route path="sign-in" element={<DangNhap />} />
         <Route path="cart" element={<Cart />} />
         <Route path="user-profile" element={<User />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
+        <Route path="products/:id" element={<ProductDetail />} />
+        <Route path="products" element={<Products />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {/* <Footer/> */}

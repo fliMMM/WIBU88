@@ -28,7 +28,7 @@ function ProductDetail() {
   const isModile = useMediaQuery("max-width:768px");
   return (
     <div style ={{
-      width: "40%",
+      width: "39%",
       margin: "0 auto",
       display: "flex",
       justifyContent: "center",

@@ -6,9 +6,10 @@ import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
 import { Typography, Button } from "@mui/material";
 import fakeData from "../../../../fakeData";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function SachMoi() {
+  const navigate = useNavigate();
   return (
     <>
       <Typography
@@ -46,15 +47,19 @@ function SachMoi() {
         className="mySwiper"
       >
         {fakeData.map((data, index) => (
-          <SwiperSlide key={index} style={{ cursor: "pointer" }}>
-              <img src={data.image} alt="picture" />
-              <Typography variant="h6">{data.name}</Typography>
-              <Typography color={"red"}>
-                {new Intl.NumberFormat("de-De", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(data.price)}
-              </Typography>
+          <SwiperSlide
+            key={index}
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("products/1")}
+          >
+            <img src={data.image} alt="picture" />
+            <Typography variant="h6">{data.name}</Typography>
+            <Typography color={"red"}>
+              {new Intl.NumberFormat("de-De", {
+                style: "currency",
+                currency: "VND",
+              }).format(data.price)}
+            </Typography>
           </SwiperSlide>
         ))}
       </Swiper>
@@ -66,7 +71,11 @@ function SachMoi() {
           justifyContent: "flex-end",
         }}
       >
-        <Button variant="contained" color="error">
+        <Button
+          onClick={() => navigate("products")}
+          variant="contained"
+          color="error"
+        >
           Xem Thêm
         </Button>
       </div>

@@ -6,8 +6,10 @@ import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
 import { Typography, Button } from "@mui/material";
 import fakeData from "../../../../fakeData";
+import { useNavigate } from "react-router-dom";
 
 function SachBanChay() {
+  const navigate = useNavigate();
   return (
     <>
       <Typography
@@ -45,7 +47,11 @@ function SachBanChay() {
         className="mySwiper"
       >
         {fakeData.map((data, index) => (
-          <SwiperSlide key={index} style={{cursor: "pointer"}}>
+          <SwiperSlide
+            key={index}
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("products/1")}
+          >
             <img src={data.image} alt="picture" />
             <Typography variant="h6">{data.name}</Typography>
             <Typography color={"red"}>
@@ -65,7 +71,11 @@ function SachBanChay() {
           justifyContent: "flex-end",
         }}
       >
-        <Button variant="contained" color="error">
+        <Button
+          onClick={() => navigate("products")}
+          variant="contained"
+          color="error"
+        >
           Xem Thêm
         </Button>
       </div>
