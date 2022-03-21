@@ -25,15 +25,16 @@ const StyledRating = styled(Rating)({
   },
 });
 function ProductDetail() {
-  const isModile = useMediaQuery("max-width:768px");
+   const isMobile = useMediaQuery("(max-width: 768px)");
   return (
     <div style ={{
-      width: "39%",
+      width: !isMobile ? "39%": "fit-content",
       margin: "0 auto",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      paddingTop : "100px"
+      paddingTop : "100px",
+      padding: !isMobile? "100px 0 0 0" : "100px 10px 0 10px"
     }}>
       <Grid
         container
@@ -59,7 +60,7 @@ function ProductDetail() {
             emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
           />
           <br />
-          <Button variant="contained" style={{ marginTop: "10px" }}>
+          <Button fullWidth variant="contained" style={{ marginTop: "10px" }}>
             Thêm vào giỏ hàng <ShoppingCartOutlined />
           </Button>
         </Grid>
