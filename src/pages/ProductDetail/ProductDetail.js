@@ -25,22 +25,22 @@ const StyledRating = styled(Rating)({
   },
 });
 function ProductDetail() {
-   const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery("(max-width: 768px)");
   return (
-    <div style ={{
-      width: !isMobile ? "39%": "fit-content",
-      margin: "0 auto",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      paddingTop : "100px",
-      padding: !isMobile? "100px 0 0 0" : "100px 10px 0 10px"
-    }}>
-      <Grid
-        container
-      >
+    <div
+      style={{
+        width: !isMobile ? "39%" : "fit-content",
+        margin: "0 auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        paddingTop: "100px",
+        padding: !isMobile ? "100px 0 0 0" : "100px 10px 0 10px",
+      }}
+    >
+      <Grid container>
         <Grid item xs={12} md={6}>
-          <img src={data.image} />
+          <img style={{ width: "100%" }} src={require("./nezuko.png")} />
         </Grid>
         <Grid item xs={12} md={6} paddingLeft={"10px"}>
           <Typography variant="h4">{data.name}</Typography>

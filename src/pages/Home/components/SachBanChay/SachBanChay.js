@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 function SachBanChay() {
   const navigate = useNavigate();
   return (
-    <>
+    <div style={{width: "80%", margin: "0 auto"}}>
       <Typography
         variant="h4"
         style={{ textAlign: "center", margin: "10px 0" }}
@@ -52,7 +52,7 @@ function SachBanChay() {
             style={{ cursor: "pointer" }}
             onClick={() => navigate("products/1")}
           >
-            <img src={data.image} alt="picture" />
+            <img style={{ width: "100%" }} src={require("./nezuko.png")} alt="picture" />
             <Typography variant="h6">{data.name}</Typography>
             <Typography color={"red"}>
               {new Intl.NumberFormat("de-De", {
@@ -79,7 +79,7 @@ function SachBanChay() {
           Xem Thêm
         </Button>
       </div>
-    </>
+    </div>
   );
 }
 
