@@ -40,7 +40,7 @@ function SachMoi() {
           },
           1536: {
             slidesPerView: 5.5,
-            spaceBetween: 70,
+            spaceBetween: 50,
           },
         }}
         modules={[Navigation, Autoplay]}
