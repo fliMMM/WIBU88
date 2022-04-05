@@ -61,7 +61,7 @@ function DangKi() {
   });
 
   return (
-    <Grid container justify="center" alignContent="center">
+    <Grid container paddingTop={"50px"} justify="center" alignContent="center" marginBottom={"-155px"}>
       <Grid
         item
         xs={8}

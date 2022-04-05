@@ -21,7 +21,7 @@ const Header = () => {
         <NavLink to="/">
           <img
             style={{ height: "50px", borderRadius: "10px" }}
-            src={require("../../image/logo.gif")}
+            src={require("../../../image/logo.gif")}
             alt="logo"
           />
           <img
@@ -31,7 +31,7 @@ const Header = () => {
               transform: "scale(0.80)",
               marginLeft: "-17px",
             }}
-            src={require("../../image/logo1.png")}
+            src={require("../../../image/logo1.png")}
             alt="logo"
           />
         </NavLink>

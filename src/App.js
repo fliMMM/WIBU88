@@ -1,7 +1,8 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import Header from "./AppLayouts/Header/Header";
-
+import Header from './components/AppLayouts/Header/Header'
+import Loadding from "./components/Loadding";
+//import Footer from './AppLayouts/Footer/Footer'
 const Home = React.lazy(() => import("./pages/Home/Home"));
 const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
@@ -12,13 +13,13 @@ const ProductDetail = React.lazy(() =>
   import("./pages/ProductDetail/ProductDetail")
 );
 const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
-const Footer = React.lazy(() => import("./AppLayouts/Footer/Footer"));
+
 
 function App() {
   return (
-    <div>
+    <div style={{position: "relative"}}>
       <Header />
-      <Suspense fallback={<h1>Loadding...</h1>}>
+      <Suspense fallback={<Loadding/>}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="sign-up" element={<DangKi />} />
@@ -31,7 +32,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-      {/* <Footer/> */}
+       {/* <Footer/> */}
     </div>
   );
 }
