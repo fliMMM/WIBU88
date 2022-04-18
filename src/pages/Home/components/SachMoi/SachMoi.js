@@ -15,7 +15,7 @@ function SachMoi() {
   const [product, setProduct] = useState([]);
 
   useEffect(()=>{
-    axios.get('http://localhost:9999/api/products/')
+    axios.get('https://backendwubi88.herokuapp.com/api/products/')
     .then(res=>setProduct(res.data.data))
   },[])
   return (
