@@ -56,7 +56,7 @@ function ProductDetail() {
         justifyContent: "center",
         alignItems: "center",
         paddingTop: "100px",
-        padding: !isMobile ? "100px 0 0 0" : "100px 10px 0 10px",
+        padding: !isMobile ? "0 0 0 0" : "0 10px 0 10px",
       }}
     >
       <Grid container>

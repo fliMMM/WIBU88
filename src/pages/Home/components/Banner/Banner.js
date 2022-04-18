@@ -28,7 +28,7 @@ function Banner(){
     
   const isMobile = useMediaQuery("(max-width: 768px)");
     return(
-        <div style={{paddingTop: "65px"}}>
+        <div>
         {!isMobile ? (
           <div className="slide-container">
             <Slide>

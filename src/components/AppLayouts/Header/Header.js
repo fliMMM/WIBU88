@@ -17,10 +17,9 @@ const Header = () => {
     setMenu(!menu);
   }
 
-  const {authState, logout} = useContext(AuthContext)
-  const user = authState.user
+  const {authState:{isAuthenticated, user}} = useContext(AuthContext)
   return (
-    <div style={{position: "fixed", zIndex: 10000, width: "100%"}}>
+    <div>
       <Nav>
         <NavLink to="/">
           <img
@@ -45,35 +44,34 @@ const Header = () => {
             <ShoppingCartOutlinedIcon style={{ marginRight: "5px" }} />
             Giỏ Hàng
           </Link>
-          {user && (
+          {isAuthenticated && (
             <Link to="/user-profile" activestyle="true">
-              {user.username}
+              {isAuthenticated.username}
             </Link>
           )}
-          {!user && (
+          {!isAuthenticated && (
             <Link to="/sign-up" activestyle="true">
               Đăng Ký
             </Link>
           )}
-          {!user && <Link to="/sign-in">Đăng Nhập</Link>}
+          {!isAuthenticated && <Link to="/sign-in">Đăng Nhập</Link>}
         </div>: ""}
         <NavMenu >
           <NavLink to="/cart" activestyle="true">
             <ShoppingCartOutlinedIcon style={{ marginRight: "5px" }} />
             Giỏ Hàng
           </NavLink>
-          {user && (
+          {isAuthenticated && (
             <NavLink to="/user-profile" activestyle="true">
               {user.username}
             </NavLink>
           )}
-          {!user && (
+          {!isAuthenticated && (
             <NavLink to="/sign-up" activestyle="true">
               Đăng Ký
             </NavLink>
           )}
-          {!user && <NavBtnLink to="/sign-in">Đăng Nhập</NavBtnLink>}
-          {user && <NavBtnLink to="/" onClick={logout}>Đăng xuất</NavBtnLink>}
+          {!isAuthenticated && <NavBtnLink to="/sign-in">Đăng Nhập</NavBtnLink>}
         </NavMenu>
       </Nav>
     </div>
