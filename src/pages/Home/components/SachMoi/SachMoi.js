@@ -7,9 +7,17 @@ import { Navigation, Autoplay } from "swiper";
 import { Typography, Button } from "@mui/material";
 import fakeData from "../../../../fakeData";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function SachMoi() {
   const navigate = useNavigate();
+  const [product, setProduct] = useState([]);
+
+  useEffect(()=>{
+    axios.get('http://localhost:9999/api/products/')
+    .then(res=>setProduct(res.data.data))
+  },[])
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Typography
@@ -46,18 +54,18 @@ function SachMoi() {
         modules={[Navigation, Autoplay]}
         className="mySwiper"
       >
-        {fakeData.map((data, index) => (
+        {product.map((data, index) => (
           <SwiperSlide
             key={index}
             style={{ cursor: "pointer" }}
-            onClick={() => navigate("products/1")}
+            onClick={() => navigate(`products/${data._id}`)}
           >
             <img
-              style={{ width: "100%" }}
-              src={require("./nezuko.png")}
-              alt="picture"
+              style={{ width: "100%", height: '270px' }}
+              src={data.image}
+              alt=""
             />
-            <Typography variant="h6">{data.name}</Typography>
+            <Typography variant="p">{data.name}</Typography>
             <Typography color={"red"}>
               {new Intl.NumberFormat("de-De", {
                 style: "currency",

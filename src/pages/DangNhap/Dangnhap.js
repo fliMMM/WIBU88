@@ -12,11 +12,15 @@ import {
   IconButton,
   InputAdornment,
 } from "@mui/material";
+import { Spinner } from "react-bootstrap";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { Login, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
   username: yup.string().required("Bạn chưa nhập tài khoản!"),
@@ -30,6 +34,8 @@ function DangNhap() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const {login} = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const formik = useFormik({
@@ -38,12 +44,20 @@ function DangNhap() {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try{
+        setLoading(true)
+        const res = await login(values);
+        if(res.success === true){
+          navigate('/')
+          setLoading(false)
+        }
+      }catch(err){
+        console.log(err);
+        setLoading(false)
+      }
     },
   });
-
-  console.log(formik.errors.username)
   return (
     <Grid paddingTop={"50px"} container justify="center" alignContent="center">
       <Grid

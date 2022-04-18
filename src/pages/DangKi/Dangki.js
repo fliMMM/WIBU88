@@ -16,6 +16,9 @@ import { Login, Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const validationSchema = yup.object({
   username: yup.string().required("Bạn chưa nhập tài khoản!"),
@@ -43,7 +46,8 @@ function DangKi() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const {register} = useContext(AuthContext);
+const navigate = useNavigate();
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
   const formik = useFormik({
@@ -55,8 +59,18 @@ function DangKi() {
       confirmPassword: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      try{
+        setLoading(true)
+        const res = await register(values);
+        if(res.success ===true){
+          navigate('/')
+          setLoading(false)
+        }
+      }catch(err){
+        console.log(err);
+        setLoading(false)
+      }
     },
   });
 

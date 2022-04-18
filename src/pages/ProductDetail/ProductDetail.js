@@ -6,6 +6,11 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styled from "styled-components";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import {apiUrl} from '../../context/constants'
+import axios from "axios";
+import { useState } from "react";
 const data = {
   image:
     "https://product.hstatic.net/200000343865/product/tieu-thuyet-chuyen-the---thanh-guom-diet-quy---khoi-dau-cua-dinh-menh_aa8fa2512987465eac69516e166836eb_large.jpg",
@@ -26,6 +31,22 @@ const StyledRating = styled(Rating)({
 });
 function ProductDetail() {
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const location = useLocation();
+  const id = location.pathname.split('/')[2];
+  const [product, setProduct] = useState()
+  
+  const getData = async () =>{
+    try{
+      const res = await axios.get(`${apiUrl}/products/${id}`)
+      setProduct(res.data.data)
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+  useEffect(() =>{
+    getData();
+  },[])
   return (
     <div
       style={{
@@ -40,12 +61,12 @@ function ProductDetail() {
     >
       <Grid container>
         <Grid item xs={12} md={6}>
-          <img style={{ width: "100%" }} src={require("./nezuko.png")} />
+          <img style={{ width: "100%" }} src={product?.image}  alt=""/>
         </Grid>
         <Grid item xs={12} md={6} paddingLeft={"10px"}>
-          <Typography variant="h4">{data.name}</Typography>
+          <Typography variant="h4">{product?.name}</Typography>
           <br />
-          <Typography variant="p">Nội Dung: {data.description}</Typography>
+          <Typography variant="p">Nội Dung: {product?.description}</Typography>
           <br />
           <br />
           <Typography component="legend" variant="p">
@@ -53,7 +74,7 @@ function ProductDetail() {
           </Typography>
           <StyledRating
             name="customized-color"
-            defaultValue={data.rating}
+            defaultValue={product?.rating}
             getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
             precision={0.5}
             icon={<FavoriteIcon fontSize="inherit" />}

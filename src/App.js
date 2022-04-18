@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
+import AuthContextProvider from "./context/AuthContext";
 import Header from './components/AppLayouts/Header/Header'
 import Loadding from "./components/Loadding";
 //import Footer from './AppLayouts/Footer/Footer'
@@ -18,7 +19,8 @@ const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 function App() {
   return (
     <div style={{position: "relative"}}>
-      <Header />
+      <AuthContextProvider>
+        <Header />
       <Suspense fallback={<Loadding/>}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -33,6 +35,7 @@ function App() {
         </Routes>
       </Suspense>
        {/* <Footer/> */}
+      </AuthContextProvider>
     </div>
   );
 }

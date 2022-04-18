@@ -6,8 +6,10 @@ import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import { useMediaQuery } from "@mui/material";
 
+import { useContext } from "react";
+import { AuthContext } from "../../../context/AuthContext";
+
 const Header = () => {
-  const user = false;
   const [menu, setMenu] = useState(false)  
   const isMobile = useMediaQuery('(min-width:768px)');
 
@@ -15,6 +17,8 @@ const Header = () => {
     setMenu(!menu);
   }
 
+  const {authState, logout} = useContext(AuthContext)
+  const user = authState.user
   return (
     <div style={{position: "fixed", zIndex: 10000, width: "100%"}}>
       <Nav>
@@ -43,7 +47,7 @@ const Header = () => {
           </Link>
           {user && (
             <Link to="/user-profile" activestyle="true">
-              Vua Lì đòn
+              {user.username}
             </Link>
           )}
           {!user && (
@@ -60,7 +64,7 @@ const Header = () => {
           </NavLink>
           {user && (
             <NavLink to="/user-profile" activestyle="true">
-              Vua Lì đòn
+              {user.username}
             </NavLink>
           )}
           {!user && (
@@ -69,6 +73,7 @@ const Header = () => {
             </NavLink>
           )}
           {!user && <NavBtnLink to="/sign-in">Đăng Nhập</NavBtnLink>}
+          {user && <NavBtnLink to="/" onClick={logout}>Đăng xuất</NavBtnLink>}
         </NavMenu>
       </Nav>
     </div>
