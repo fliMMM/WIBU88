@@ -48,11 +48,6 @@ const AuthContextProvider = ({children}) =>{
     }
   }
 
-  const logout = async () =>{
-    localStorage.removeItem('accessToken');
-    await loadUser();
-  }
-
   const register = async(data) =>{
     try{
       const res = await axios.post(`${apiUrl}/auth/register`, data)
@@ -66,9 +61,18 @@ const AuthContextProvider = ({children}) =>{
     }
   }
 
+  //logout
+  const logoutUser = () => {
+		localStorage.removeItem('accessToken')
+		dispatch({
+			type: 'SET_AUTH',
+			payload: { isAuthenticated: false, user: null }
+		})
+	}
+
   
   
-  const value = {login, authState, loadUser, logout, register}
+  const value = {login, authState,logoutUser, register}
   return(
     <AuthContext.Provider value={value}>
       {children}

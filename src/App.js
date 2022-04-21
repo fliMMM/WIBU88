@@ -4,7 +4,7 @@ import AuthContextProvider from "./context/AuthContext";
 import Header from './components/AppLayouts/Header/Header'
 import Loadding from "./components/Loadding";
 //import Footer from './AppLayouts/Footer/Footer'
-const Home = React.lazy(() => import("./pages/Home/Home"));
+import Home from './pages/Home/Home'
 const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));

@@ -51,6 +51,8 @@ function DangNhap() {
         if(res.success === true){
           navigate('/')
           setLoading(false)
+        }else{
+          setLoading(false)
         }
       }catch(err){
         console.log(err);

@@ -3,22 +3,23 @@ import { Nav, NavLink, Bars, NavMenu, NavBtnLink } from "./style";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import styles from './Header.module.css';
 import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import { useMediaQuery } from "@mui/material";
 
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import { useEffect } from "react";
 
 const Header = () => {
   const [menu, setMenu] = useState(false)  
   const isMobile = useMediaQuery('(min-width:768px)');
-
   const handleMenu = ()=>{
     setMenu(!menu);
   }
 
-  const {authState:{isAuthenticated, user}} = useContext(AuthContext)
-  return (
+  const {authState:{isAuthenticated, user}, logoutUser} = useContext(AuthContext)
+
+  return(
     <div>
       <Nav>
         <NavLink to="/">
@@ -72,6 +73,8 @@ const Header = () => {
             </NavLink>
           )}
           {!isAuthenticated && <NavBtnLink to="/sign-in">Đăng Nhập</NavBtnLink>}
+          {isAuthenticated && <NavBtnLink to="/" onClick={logoutUser}>Đăng xuất</NavBtnLink>}
+          
         </NavMenu>
       </Nav>
     </div>

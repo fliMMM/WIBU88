@@ -8,18 +8,10 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import {apiUrl} from '../../context/constants'
+import { apiUrl } from "../../context/constants";
 import axios from "axios";
 import { useState } from "react";
-const data = {
-  image:
-    "https://product.hstatic.net/200000343865/product/tieu-thuyet-chuyen-the---thanh-guom-diet-quy---khoi-dau-cua-dinh-menh_aa8fa2512987465eac69516e166836eb_large.jpg",
-  name: "Thanh gươm diệt quỷ",
-  price: 49500,
-  description:
-    "Vào thời Taisho, có một cậu bé bán than với tấm lòng nhân hậu tên là Tanjiro. Những ngày yên bình bỗng chốc tan biến khi “Quỷ” đến tàn sát cả gia đình cậu, chỉ duy nhất người em gái Nezuko còn sống sót nhưng lại bị biến thành Quỷ. Mang trong mình quyết tâm giúp em gái trở lại làm người, Tanjiro cùng Nezuko bắt đầu cuộc hành trình tìm kiếm tung tích con quỷ đã ra tay với gia đình mình!! Cuộc phiêu lưu trên con đường kiếm sĩ đầy chông gai đã bắt đầu!!",
-  rating: 5,
-};
+import styles from "./style.module.css";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -32,60 +24,65 @@ const StyledRating = styled(Rating)({
 function ProductDetail() {
   const isMobile = useMediaQuery("(max-width: 768px)");
   const location = useLocation();
-  const id = location.pathname.split('/')[2];
-  const [product, setProduct] = useState()
-  
-  const getData = async () =>{
-    try{
-      const res = await axios.get(`${apiUrl}/products/${id}`)
-      setProduct(res.data.data)
-    }catch(err){
+  const id = location.pathname.split("/")[2];
+  const [product, setProduct] = useState();
+  const [cart, setCart] = useState([])
+
+  const getData = async () => {
+    try {
+      const res = await axios.get(`${apiUrl}/products/${id}`);
+      setProduct(res.data.data);
+    } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleAddToCart = (id) =>{
+    setCart([...cart, id])
+    //localStorage.setItem('cart', cart);
+    
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     getData();
-  },[])
+  }, []);
+  console.log(cart);
   return (
-    <div
-      style={{
-        width: !isMobile ? "39%" : "fit-content",
-        margin: "0 auto",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        paddingTop: "100px",
-        padding: !isMobile ? "0 0 0 0" : "0 10px 0 10px",
-      }}
-    >
-      <Grid container>
-        <Grid item xs={12} md={6}>
-          <img style={{ width: "100%" }} src={product?.image}  alt=""/>
-        </Grid>
-        <Grid item xs={12} md={6} paddingLeft={"10px"}>
-          <Typography variant="h4">{product?.name}</Typography>
-          <br />
-          <Typography variant="p">Nội Dung: {product?.description}</Typography>
-          <br />
-          <br />
-          <Typography component="legend" variant="p">
-            Yêu thích
-          </Typography>
-          <StyledRating
-            name="customized-color"
-            defaultValue={product?.rating}
-            getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
-            precision={0.5}
-            icon={<FavoriteIcon fontSize="inherit" />}
-            emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-          />
-          <br />
-          <Button fullWidth variant="contained" style={{ marginTop: "10px" }}>
-            Thêm vào giỏ hàng <ShoppingCartOutlined />
-          </Button>
-        </Grid>
-      </Grid>
+    <div>
+      <div className={styles.container}>
+      <img src={product?.image} alt="" />
+      <div className={styles.right}>
+        <h3>{product?.name}</h3>
+        <Typography><b>Tác Giả:</b> {product?.author}</Typography>
+        <Typography><b>Thể Loại:</b>{product?.categories.map((cate)=>{
+          return cate + ',';
+        })}</Typography>
+        {/* <Typography component="legend" variant="p">
+          <b>Yêu thích</b>
+        </Typography> */}
+        <StyledRating
+          name="customized-color"
+          defaultValue={product?.rating}
+          getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
+          precision={1}
+          icon={<FavoriteIcon fontSize="inherit" />}
+          emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+        />
+        <br />
+        <Button onClick={()=>handleAddToCart(product._id)} fullWidth variant="contained" style={{ marginTop: "10px" }}>
+          Thêm vào giỏ hàng <ShoppingCartOutlined />
+        </Button>
+      </div>
+    </div>
+    <div className={styles.bottom}>
+      <p className={styles.title}>Nội dung</p>
+      <p className={styles.des}>{product?.description}</p>
+    </div>
+
+    <div className={styles.bottom}>
+      <p className={styles.title}>Bình luận</p>
+      <p className={styles.des}>{product?.description}</p>
+    </div>
     </div>
   );
 }

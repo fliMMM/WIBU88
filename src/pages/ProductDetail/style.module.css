@@ -1,0 +1,46 @@
+.container{
+  max-height: fit-content;
+  display: flex;
+  max-width: 50%;
+  margin: 0 auto;
+}
+
+ .container img{
+  width:50%;
+}
+
+
+.right{
+  margin-left: 30px;
+}
+
+.bottom{
+  margin: 50px auto;
+  height: fit-content;
+  max-width: 50%;
+  border: 1px solid rgb(230,230,230);
+ 
+}
+
+.title{
+  background-color: rgb(243, 84, 84);
+  color: white;
+  font-weight: bolder;
+  font-size: 1.2rem;
+  margin-top: -1px;
+  padding-left: 5px
+}
+
+.des{
+  padding: 0 10px 10px 10px ;
+}
+
+@media only screen and (max-width: 600px) {
+  .container{
+    flex-direction: column;
+  }
+
+  .container img{
+  width: 100%;
+}
+}
