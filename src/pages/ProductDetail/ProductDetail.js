@@ -12,6 +12,8 @@ import { apiUrl } from "../../context/constants";
 import axios from "axios";
 import { useState } from "react";
 import styles from "./style.module.css";
+import { CartContext } from "../../context/CartContext";
+import { useContext } from "react";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -26,7 +28,8 @@ function ProductDetail() {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState();
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState([]);
+  const { addToCart } = useContext(CartContext);
 
   const getData = async () => {
     try {
@@ -37,11 +40,9 @@ function ProductDetail() {
     }
   };
 
-  const handleAddToCart = (id) =>{
-    setCart([...cart, id])
-    //localStorage.setItem('cart', cart);
-    
-  }
+  const handleAddToCart = (id) => {
+    addToCart(id);
+  };
 
   useEffect(() => {
     getData();
@@ -50,39 +51,49 @@ function ProductDetail() {
   return (
     <div>
       <div className={styles.container}>
-      <img src={product?.image} alt="" />
-      <div className={styles.right}>
-        <h3>{product?.name}</h3>
-        <Typography><b>Tác Giả:</b> {product?.author}</Typography>
-        <Typography><b>Thể Loại:</b>{product?.categories.map((cate)=>{
-          return cate + ',';
-        })}</Typography>
-        {/* <Typography component="legend" variant="p">
+        <img src={product?.image} alt="" />
+        <div className={styles.right}>
+          <h3>{product?.name}</h3>
+          <Typography>
+            <b>Tác Giả:</b> {product?.author}
+          </Typography>
+          <Typography>
+            <b>Thể Loại:</b>
+            {product?.categories.map((cate) => {
+              return cate + ",";
+            })}
+          </Typography>
+          {/* <Typography component="legend" variant="p">
           <b>Yêu thích</b>
         </Typography> */}
-        <StyledRating
-          name="customized-color"
-          defaultValue={product?.rating}
-          getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
-          precision={1}
-          icon={<FavoriteIcon fontSize="inherit" />}
-          emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-        />
-        <br />
-        <Button onClick={()=>handleAddToCart(product._id)} fullWidth variant="contained" style={{ marginTop: "10px" }}>
-          Thêm vào giỏ hàng <ShoppingCartOutlined />
-        </Button>
+          <StyledRating
+            name="customized-color"
+            defaultValue={product?.rating}
+            getLabelText={(value) => `${value} Heart${value !== 1 ? "s" : ""}`}
+            precision={1}
+            icon={<FavoriteIcon fontSize="inherit" />}
+            emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
+          />
+          <br />
+          <Button
+            onClick={() => handleAddToCart(product._id)}
+            fullWidth
+            variant="contained"
+            style={{ marginTop: "10px" }}
+          >
+            Thêm vào giỏ hàng <ShoppingCartOutlined />
+          </Button>
+        </div>
       </div>
-    </div>
-    <div className={styles.bottom}>
-      <p className={styles.title}>Nội dung</p>
-      <p className={styles.des}>{product?.description}</p>
-    </div>
+      <div className={styles.bottom}>
+        <p className={styles.title}>Nội dung</p>
+        <p className={styles.des}>{product?.description}</p>
+      </div>
 
-    <div className={styles.bottom}>
-      <p className={styles.title}>Bình luận</p>
-      <p className={styles.des}>{product?.description}</p>
-    </div>
+      <div className={styles.bottom}>
+        <p className={styles.title}>Bình luận</p>
+        <p className={styles.des}>{product?.description}</p>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,13 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import AuthContextProvider from "./context/AuthContext";
-import Header from './components/AppLayouts/Header/Header'
+import ProductContextProvider from "./context/ProductContext";
+import CartContextProvider from "./context/CartContext";
+import CircularProgress from '@mui/material/CircularProgress';
+import Header from "./components/AppLayouts/Header/Header";
 import Loadding from "./components/Loadding";
 //import Footer from './AppLayouts/Footer/Footer'
-import Home from './pages/Home/Home'
+import Home from "./pages/Home/Home";
 const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
@@ -15,26 +18,29 @@ const ProductDetail = React.lazy(() =>
 );
 const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 
-
 function App() {
   return (
-    <div style={{position: "relative"}}>
+    <div style={{ position: "relative" }}>
       <AuthContextProvider>
-        <Header />
-      <Suspense fallback={<Loadding/>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="sign-up" element={<DangKi />} />
-          <Route path="sign-in" element={<DangNhap />} />
-          <Route path="cart" element={<Cart />} />
-          <Route path="user-profile" element={<User />} />
-          <Route path="products" element={<Products />}>
-            <Route path=":id" element={<ProductDetail />} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
-       {/* <Footer/> */}
+        <ProductContextProvider>
+          <CartContextProvider>
+            <Header />
+            <Suspense fallback={<CircularProgress />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="sign-up" element={<DangKi />} />
+                <Route path="sign-in" element={<DangNhap />} />
+                <Route path="cart" element={<Cart />} />
+                <Route path="user-profile" element={<User />} />
+                <Route path="products" element={<Products />}>
+                  <Route path=":id" element={<ProductDetail />} />
+                </Route>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+            {/* <Footer/> */}
+          </CartContextProvider>
+        </ProductContextProvider>
       </AuthContextProvider>
     </div>
   );

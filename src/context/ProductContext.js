@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { apiUrl } from "./constants";
 import axios from "axios";
 import { useState } from "react";
+import { useEffect } from "react";
 
 
 export const ProductContext = createContext(null);
@@ -10,6 +11,7 @@ export const ProductContext = createContext(null);
 const ProductContextProvider = ({ children }) => {
 
   const [product1, setProduct] = useState({})
+  const [listProduct, setListProduct] = useState([]);
 
   const Add = async (data) => {
     try {
@@ -24,12 +26,17 @@ const ProductContextProvider = ({ children }) => {
   const getAll = async () => {
     try {
       const res = await axios.get(`${apiUrl}/products`);
+      setListProduct(res.data.data)
       return res.data;
     } catch (error) {
       console.log(error);
       return { success: false, message: error.response.data.message };
     }
   };
+
+  useEffect(()=>{
+    getAll();
+  },[])
 
   const getProductById = async (id) => {
     try {
@@ -63,7 +70,7 @@ const ProductContextProvider = ({ children }) => {
   }
 
 
-  const value = { Add, getAll, getProductById, product1,updateProduct,deleteProduct };
+  const value = { Add, getAll, getProductById, product1,updateProduct,deleteProduct,listProduct };
   return (
     <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
   );

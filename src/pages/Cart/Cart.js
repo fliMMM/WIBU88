@@ -3,8 +3,14 @@ import data from "./fakeData";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import styles from "./cart.module.css";
+import { CartContext } from "../../context/CartContext";
+import { useContext } from "react";
+import ProductContext from "../../context/ProductContext";
+
 function Cart() {
   const [quantity, setQuantity] = useState(1);
+  const { cart } = useContext(CartContext);
+  console.log(cart);
 
   const handleIncreaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -26,7 +32,7 @@ function Cart() {
   };
   return (
     <div className={styles.container}>
-      {data.map((item, index) => {
+      {cart.map((item, index) => {
         return (
           <div key={index} className={styles.cart}>
             <img className={styles.left} src={item.image} alt="phôto" />
