@@ -1,38 +1,44 @@
 import React from "react";
-import data from "./fakeData";
 import { Button } from "@mui/material";
 import { useState } from "react";
 import styles from "./cart.module.css";
 import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 import ProductContext from "../../context/ProductContext";
+import { useEffect } from "react";
 
 function Cart() {
-  const [quantity, setQuantity] = useState(1);
-  const { cart } = useContext(CartContext);
+  //const { cart } = useContext(CartContext);
+  const [cart, setCart] = useState([]);
+
   console.log(cart);
 
-  const handleIncreaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
-  const handleDecreaseQuantity = () => {
-    if (quantity > 0) {
-      setQuantity(quantity - 1);
-    }
-  };
-  const handleInput = (e) => {
-    if (e.target.value === "") {
-      setQuantity(0);
-    } else {
-      const temp = parseInt(e.target.value);
-      if (temp) {
-        setQuantity(temp);
-      }
-    }
-  };
+  useEffect(()=>{
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    setCart(cart);
+  },[])
+
+  // const handleIncreaseQuantity = () => {
+  //   setQuantity(quantity + 1);
+  // };
+  // const handleDecreaseQuantity = () => {
+  //   if (quantity > 0) {
+  //     setQuantity(quantity - 1);
+  //   }
+  // };
+  // const handleInput = (e) => {
+  //   if (e.target.value === "") {
+  //     setQuantity(0);
+  //   } else {
+  //     const temp = parseInt(e.target.value);
+  //     if (temp) {
+  //       setQuantity(temp);
+  //     }
+  //   }
+  // };
   return (
     <div className={styles.container}>
-      {cart.map((item, index) => {
+      {cart?.map((item, index) => {
         return (
           <div key={index} className={styles.cart}>
             <img className={styles.left} src={item.image} alt="phôto" />
@@ -42,15 +48,19 @@ function Cart() {
                 <Button
                   variant="contained"
                   color="error"
-                  onClick={handleDecreaseQuantity}
+                  onClick={() =>{
+                    item.quantity--
+                  }}
                 >
                   -
                 </Button>
-                <input value={quantity} onChange={(e) => handleInput(e)} />
+                <input value={item.quantity}  />
                 <Button
                   variant="contained"
                   color="success"
-                  onClick={handleIncreaseQuantity}
+                  onClick={()=>{
+                    item.quantity++;
+                  }}
                 >
                   +
                 </Button>
@@ -60,7 +70,7 @@ function Cart() {
               {new Intl.NumberFormat("de-De", {
                 style: "currency",
                 currency: "VND",
-              }).format(item.price * quantity)}
+              }).format(item.price * item.quantity)}
             </p>
           </div>
         );

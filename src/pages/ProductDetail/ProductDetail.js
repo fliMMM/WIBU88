@@ -14,6 +14,8 @@ import { useState } from "react";
 import styles from "./style.module.css";
 import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
+import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
+import { ProductContext } from "../../context/ProductContext";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -28,8 +30,9 @@ function ProductDetail() {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState();
-  const [cart, setCart] = useState([]);
   const { addToCart } = useContext(CartContext);
+  const {listProduct} = useContext(ProductContext);
+  const [cart, setCart] = useState([]);
 
   const getData = async () => {
     try {
@@ -47,7 +50,6 @@ function ProductDetail() {
   useEffect(() => {
     getData();
   }, []);
-  console.log(cart);
   return (
     <div>
       <div className={styles.container}>
@@ -81,7 +83,14 @@ function ProductDetail() {
             variant="contained"
             style={{ marginTop: "10px" }}
           >
-            Thêm vào giỏ hàng <ShoppingCartOutlined />
+            Thêm vào giỏ hàng <ShoppingCartOutlined sx={{marginLeft: '10px'}} />
+          </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            style={{ marginTop: "10px" }}
+          >
+            Đọc thử <MenuBookRoundedIcon sx={{marginLeft: '10px'}}/>
           </Button>
         </div>
       </div>
