@@ -3,7 +3,8 @@ import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Nav = styled.nav`
-  background: #000;
+  // background:#520709;
+  background:#520709;
   height: 50px;
   display: flex;
   justify-content: space-between;
@@ -48,7 +49,7 @@ export const NavMenu = styled.div`
 
 export const NavBtnLink = styled(Link)`
   border-radius: 4px;
-  background: #256ce1;
+  // background: #256ce1;
   padding: 8px 22px;
   color: #fff;
   outline: none;

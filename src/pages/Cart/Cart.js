@@ -8,24 +8,19 @@ import ProductContext from "../../context/ProductContext";
 import { useEffect } from "react";
 
 function Cart() {
-  //const { cart } = useContext(CartContext);
   const [cart, setCart] = useState([]);
-
-  console.log(cart);
 
   useEffect(()=>{
     const cart = JSON.parse(localStorage.getItem('cart'));
     setCart(cart);
   },[])
 
-  // const handleIncreaseQuantity = () => {
-  //   setQuantity(quantity + 1);
-  // };
-  // const handleDecreaseQuantity = () => {
-  //   if (quantity > 0) {
-  //     setQuantity(quantity - 1);
-  //   }
-  // };
+  const handleIncreaseQuantity = () => {
+    console.log("in");
+  };
+  const handleDecreaseQuantity = () => {
+    console.log("des");
+  };
   // const handleInput = (e) => {
   //   if (e.target.value === "") {
   //     setQuantity(0);
@@ -48,9 +43,7 @@ function Cart() {
                 <Button
                   variant="contained"
                   color="error"
-                  onClick={() =>{
-                    item.quantity--
-                  }}
+                  onClick={handleDecreaseQuantity}
                 >
                   -
                 </Button>
@@ -58,9 +51,7 @@ function Cart() {
                 <Button
                   variant="contained"
                   color="success"
-                  onClick={()=>{
-                    item.quantity++;
-                  }}
+                  onClick={handleIncreaseQuantity}
                 >
                   +
                 </Button>
