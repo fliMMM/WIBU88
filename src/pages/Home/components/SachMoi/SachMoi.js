@@ -9,13 +9,14 @@ import fakeData from "../../../../fakeData";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {apiUrl} from '../../../../context/constants'
 
 function SachMoi() {
   const navigate = useNavigate();
   const [product, setProduct] = useState([]);
 
   useEffect(()=>{
-    axios.get('https://backendwubi88.herokuapp.com/api/products/')
+    axios.get(`${apiUrl}/products/new`)
     .then(res=>setProduct(res.data.data))
   },[])
   return (
