@@ -31,8 +31,12 @@ function ProductDetail() {
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState();
   const { addToCart } = useContext(CartContext);
-  const { listProduct } = useContext(ProductContext);
   const [cart, setCart] = useState([]);
+
+  useEffect(()=>{
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    setCart(cart);
+  },[])
 
   const getData = async () => {
     try {
@@ -60,7 +64,7 @@ function ProductDetail() {
               {' ' + new Intl.NumberFormat("de-De", {
                 style: "currency",
                 currency: "VND",
-              }).format(product.price)}
+              }).format(product?.price)}
             </Typography>
           <div className={styles.info}>
             <Typography>

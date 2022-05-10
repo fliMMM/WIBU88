@@ -1,5 +1,5 @@
 .container{
-    width: 60%;
+    width: 48%;
     margin: 0 auto;
     padding-top: 50px;
 }
@@ -32,6 +32,7 @@
     justify-content: space-between;
     align-items: center;
     width: 180px;
+    margin: 0 auto;
 }
 
 .quantity button{

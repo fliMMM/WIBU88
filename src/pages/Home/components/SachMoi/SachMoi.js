@@ -5,20 +5,21 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
 import { Typography, Button } from "@mui/material";
-import fakeData from "../../../../fakeData";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {apiUrl} from '../../../../context/constants'
+import { apiUrl } from "../../../../context/constants";
 
 function SachMoi() {
   const navigate = useNavigate();
   const [product, setProduct] = useState([]);
 
-  useEffect(()=>{
-    axios.get(`${apiUrl}/products/new`)
-    .then(res=>setProduct(res.data.data))
-  },[])
+  useEffect(() => {
+    axios
+      .get(`${apiUrl}/products/new`)
+      .then((res) => setProduct(res.data.data));
+  }, []);
+  //console.log(product);
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Typography
@@ -55,26 +56,28 @@ function SachMoi() {
         modules={[Navigation, Autoplay]}
         className="mySwiper"
       >
-        {product.map((data, index) => (
-          <SwiperSlide
-            key={index}
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate(`products/${data._id}`)}
-          >
-            <img
-              style={{ width: "100%", height: '270px' }}
-              src={data.image}
-              alt=""
-            />
-            <Typography variant="p">{data.name}</Typography>
-            <Typography color={"red"}>
-              {new Intl.NumberFormat("de-De", {
-                style: "currency",
-                currency: "VND",
-              }).format(data.price)}
-            </Typography>
-          </SwiperSlide>
-        ))}
+        {product.map((data, index) => {
+          return (
+            <SwiperSlide
+              key={index}
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(`products/${data._id}`)}
+            >
+              <img
+                style={{ width: "100%", height: "270px" }}
+                src={data.image}
+                alt=""
+              />
+              <Typography variant="p">{data.name}</Typography>
+              <Typography color={"red"}>
+                {new Intl.NumberFormat("de-De", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(data.price)}
+              </Typography>
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
       <div
         style={{
