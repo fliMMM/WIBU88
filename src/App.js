@@ -7,6 +7,7 @@ import OrderContextProvider from "./context/OrderContext";
 import CircularProgress from "@mui/material/CircularProgress";
 import Header from "./components/AppLayouts/Header/Header";
 import Loadding from "./components/Loadding";
+import { SnackbarProvider, useSnackbar } from "notistack";
 //import Footer from './AppLayouts/Footer/Footer'
 import Home from "./pages/Home/Home";
 const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
@@ -23,30 +24,32 @@ const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 function App() {
   return (
     <div style={{ position: "relative" }}>
-      <AuthContextProvider>
-        <ProductContextProvider>
-          <CartContextProvider>
-            <OrderContextProvider>
-              <Header />
-              <Suspense fallback={<CircularProgress />}>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="sign-up" element={<DangKi />} />
-                  <Route path="sign-in" element={<DangNhap />} />
-                  <Route path="cart" element={<Cart />} />
-                  <Route path="user-profile" element={<User />} />
-                  <Route path="products" element={<Products />}>
-                    <Route path=":id" element={<ProductDetail />} />
-                  </Route>
-                  <Route path="order" element={<ThanhToan />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-              {/* <Footer/> */}
-            </OrderContextProvider>
-          </CartContextProvider>
-        </ProductContextProvider>
-      </AuthContextProvider>
+      <SnackbarProvider maxSnack={4}>
+        <AuthContextProvider>
+          <ProductContextProvider>
+            <CartContextProvider>
+              <OrderContextProvider>
+                <Header />
+                <Suspense fallback={<CircularProgress />}>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="sign-up" element={<DangKi />} />
+                    <Route path="sign-in" element={<DangNhap />} />
+                    <Route path="cart" element={<Cart />} />
+                    <Route path="user-profile" element={<User />} />
+                    <Route path="products" element={<Products />}>
+                      <Route path=":id" element={<ProductDetail />} />
+                    </Route>
+                    <Route path="order" element={<ThanhToan />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </Suspense>
+                {/* <Footer/> */}
+              </OrderContextProvider>
+            </CartContextProvider>
+          </ProductContextProvider>
+        </AuthContextProvider>
+      </SnackbarProvider>
     </div>
   );
 }

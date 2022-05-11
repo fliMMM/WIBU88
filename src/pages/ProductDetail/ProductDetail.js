@@ -15,7 +15,7 @@ import styles from "./style.module.css";
 import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
-import { ProductContext } from "../../context/ProductContext";
+import { useSnackbar } from "notistack";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -26,12 +26,12 @@ const StyledRating = styled(Rating)({
   },
 });
 function ProductDetail() {
-  const isMobile = useMediaQuery("(max-width: 768px)");
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState();
   const { addToCart } = useContext(CartContext);
   const [cart, setCart] = useState([]);
+  const { enqueueSnackbar} = useSnackbar();
 
   useEffect(()=>{
     const cart = JSON.parse(localStorage.getItem('cart'));
@@ -49,6 +49,7 @@ function ProductDetail() {
 
   const handleAddToCart = (id) => {
     addToCart(id);
+    enqueueSnackbar('Thêm vào gió hàng thành công', { variant: "success" });
   };
 
   useEffect(() => {

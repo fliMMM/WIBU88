@@ -13,7 +13,7 @@ const OrderContextProvider = ({children}) =>{
 
   const addNewOrder = async(data) =>{
     try{
-      const res = await axios.post()
+      const res = await axios.post(`${apiUrl}/orders/`, data)
       return res.data;
     }catch(e){
       console.log(e);

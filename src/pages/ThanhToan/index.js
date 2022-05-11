@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Grid,
   Stack,
   Box,
   FormControl,
@@ -12,17 +11,35 @@ import {
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { AuthContext } from "../../context/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import { orderContext } from "../../context/OrderContext";
 import { useState } from "react";
+import { useSnackbar } from "notistack";
 
 function ThanhToan() {
   const {
     authState: { user },
   } = useContext(AuthContext);
-  const { order } = useContext(orderContext);
+  const { order, addNewOrder } = useContext(orderContext);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [products, setProducts] = useState([]);
+  const { enqueueSnackbar} = useSnackbar();
+
+  useEffect(() => {
+    const products = order.map((item) => {
+      return {
+        name: item.product.name,
+        price: item.product.price * item.quantity,
+      };
+    });
+    setProducts(products);
+    const price = products.map((item) => item.price);
+    if (order.length > 0) {
+      const totalPrice = price.reduce((pre, curr) => pre + curr);
+      setTotalPrice(totalPrice);
+    }
+  }, [order]);
 
   const formik = useFormik({
     initialValues: {
@@ -33,16 +50,14 @@ function ThanhToan() {
       paymentMethod: "",
     },
     onSubmit: async (values) => {
-      const products = order.map((item) => {
-        return {
-          name: item.product.name,
-          price: item.product.price * item.quantity,
-        };
-      });
-      const price = products.map((item) => item.price);
-      const totalPrice = price.reduce((pre, curr) => pre + curr);
-      setTotalPrice(totalPrice);
       const data = { products, ...values, totalPrice };
+      const res = await addNewOrder(data);
+      if (res.success === true) {
+        enqueueSnackbar(res.message, { variant: "success" });
+      }
+      if (res.success === false) {
+        enqueueSnackbar(res.message, { variant: "error" });
+      }
     },
   });
   return (
@@ -122,7 +137,7 @@ function ThanhToan() {
                 name="paymentMethod"
                 onChange={formik.handleChange}
               >
-                <MenuItem value="COD">Thanh toán khi giao hàng ()COD</MenuItem>
+                <MenuItem value="COD">Thanh toán khi giao hàng (COD)</MenuItem>
                 <MenuItem value="MOMO">Ví Momo</MenuItem>
                 <MenuItem value="ZALO">ZaloPay</MenuItem>
                 <MenuItem value="SHOPEE">ShopeePay</MenuItem>
@@ -144,9 +159,9 @@ function ThanhToan() {
       </Box>
       <Box minWidth={"50%"} sx={{ backgroundColor: "#FAFAFA" }}>
         <Stack ml={5} mt={2}>
-          {order.map((item, index) => {
+          {order?.map((item, index) => {
             return (
-              <Stack key={index} direction='row' spacing={1} mb={1} >
+              <Stack key={index} direction="row" spacing={1} mb={1}>
                 <Stack direction="row" spacing={1} minWidth={"75%"}>
                   <img
                     style={{ width: "60px", borderRadius: "5px" }}
@@ -157,7 +172,7 @@ function ThanhToan() {
                     {item.product.name} x {item.quantity}
                   </Typography>
                 </Stack>
-                <Typography style={{minWidth:'25%'}}>
+                <Typography style={{ minWidth: "25%" }}>
                   {new Intl.NumberFormat("de-De", {
                     style: "currency",
                     currency: "VND",
@@ -166,6 +181,64 @@ function ThanhToan() {
               </Stack>
             );
           })}
+        </Stack>
+        <Stack
+          direction="row"
+          ml={5}
+          spacing={6}
+          style={{ borderTop: "1px solid #E1E1E1" }}
+          mt={2}
+        >
+          <FormControl margin="normal" style={{ minWidth: "65%" }}>
+            <InputLabel>Mã giảm giá</InputLabel>
+            <Input
+              name="voucher"
+              fullWidth
+              id="voucher"
+              //onChange={formik.handleChange}
+            />
+          </FormControl>
+          <Button
+            variant="contained"
+            style={{ minWidth: "25%", height: "100%", margin: "25px auto" }}
+          >
+            Sử dụng
+          </Button>
+        </Stack>
+        <Stack ml={5} pt={2} style={{ borderTop: "1px solid #E1E1E1" }} mt={2}>
+          <Stack direction={"row"}>
+            <Typography minWidth={"75%"}>Tạm tính: </Typography>
+            <Typography>
+              {new Intl.NumberFormat("de-De", {
+                style: "currency",
+                currency: "VND",
+              }).format(totalPrice)}
+            </Typography>
+          </Stack>
+          <Stack direction={"row"}>
+            <Typography minWidth={"75%"}>Phí vận chuyển: </Typography>
+            <Typography>
+              {new Intl.NumberFormat("de-De", {
+                style: "currency",
+                currency: "VND",
+              }).format(35000)}
+            </Typography>
+          </Stack>
+        </Stack>
+        <Stack
+          ml={5}
+          direction="row"
+          pt={2}
+          style={{ borderTop: "1px solid #E1E1E1" }}
+          mt={2}
+        >
+          <Typography minWidth={"75%"}>Tạm tính: </Typography>
+          <Typography>
+            {new Intl.NumberFormat("de-De", {
+              style: "currency",
+              currency: "VND",
+            }).format(totalPrice + 35000)}
+          </Typography>
         </Stack>
       </Box>
     </Stack>
