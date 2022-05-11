@@ -68,38 +68,38 @@ function ProductDetail() {
             </Typography>
           <div className={styles.info}>
             <Typography>
-              <b>Tác Giả:</b> {product?.author}
+              <b>Tác Giả: </b> {product?.author}
             </Typography>
             <Typography>
-              <b>Thể Loại:</b>
+              <b>Thể Loại: </b>
               {product?.categories.map((cate) => {
                 return cate + ",";
               })}
             </Typography>
             <Typography>
-              <b>Đối tượng:</b>
+              <b>Đối tượng: </b>
               {product?.target}
             </Typography>
             <Typography>
-              <b>Khuôn khổ:</b>
+              <b>Khuôn khổ: </b>
               {product?.khuonKho}
             </Typography>
             <Typography>
-              <b>Số trang:</b>
+              <b>Số trang: </b>
               {product?.soTrang}
             </Typography>
             <Typography>
-              <b>Định dạng:</b>
+              <b>Định dạng: </b>
               {product?.categories.map((cate) => {
                 return cate + ",";
               })}
             </Typography>
             <Typography>
-              <b>Trọng lượng:</b>
+              <b>Trọng lượng: </b>
               {product?.weight}
             </Typography>
             <Typography>
-              <b>Bộ sách:</b>
+              <b>Bộ sách: </b>
               {product?.combo}
             </Typography>
             
@@ -107,7 +107,7 @@ function ProductDetail() {
             {/* <Typography component="legend" variant="p">
           <b>Yêu thích</b>
         </Typography> */}
-            <StyledRating
+            {/* <StyledRating
               name="customized-color"
               defaultValue={product?.rating}
               getLabelText={(value) =>
@@ -116,7 +116,7 @@ function ProductDetail() {
               precision={1}
               icon={<FavoriteIcon fontSize="inherit" />}
               emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-            />
+            /> */}
           </div>
           <br />
           <div>

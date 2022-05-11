@@ -4,9 +4,11 @@ import { useState } from "react";
 import styles from "./cart.module.css";
 import { CartContext } from "../../context/CartContext";
 import { AuthContext } from "../../context/AuthContext";
+import { orderContext } from "../../context/OrderContext";
 import { useContext } from "react";
 import { useEffect } from "react";
 import { Typography } from "@mui/material";
+import { Link} from "react-router-dom";
 
 function Cart() {
   const [cart, setCart] = useState([]);
@@ -15,6 +17,7 @@ function Cart() {
     authState: { user },
   } = useContext(AuthContext);
   const { getCartList, deleteCart } = useContext(CartContext);
+  const {addToOrder} = useContext(orderContext);
 
   const getAll = async () => {
     const res = await getCartList();
@@ -31,6 +34,10 @@ function Cart() {
       setCart(cart);
     }
   }, [reload]);
+
+  useEffect(() =>{
+    addToOrder(cart);
+  },[addToOrder, cart])
 
   const handleIncreaseQuantity = (id) => {
     const newCart = [...cart];
@@ -109,13 +116,24 @@ function Cart() {
                   <div className={styles.right}>
                     <p>{item.product.name}</p>
                     <div className={styles.quantity}>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        onClick={() => handleDecreaseQuantity(item._id)}
-                      >
-                        -
-                      </Button>
+                      {item.quantity > 0 && (
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => handleDecreaseQuantity(item._id)}
+                        >
+                          -
+                        </Button>
+                      )}
+                      {item.quantity === 0 && (
+                        <Button
+                          onClick={() => handleDeleteCart(item._id)}
+                          variant="contained"
+                          color="error"
+                        >
+                          Xóa
+                        </Button>
+                      )}
                       <input
                         value={item.quantity}
                         onChange={(e) => handleInput(e, item._id)}
@@ -128,20 +146,6 @@ function Cart() {
                         +
                       </Button>
                     </div>
-                    {item.quantity === 0 && (
-                      <Button
-                        onClick={() => handleDeleteCart(item._id)}
-                        variant="contained"
-                        color="error"
-                        sx={{
-                          marginTop: "15px",
-                          marginLeft: "27%",
-                          width: "45%",
-                        }}
-                      >
-                        Xóa
-                      </Button>
-                    )}
                   </div>
                   <p className={styles.price}>
                     {new Intl.NumberFormat("de-De", {
@@ -160,13 +164,23 @@ function Cart() {
                 alignItems: "center",
               }}
             >
-              <Button fullWidth color="success" variant="contained">
-                Thanh Toán
-              </Button>
+              <Link
+                to="/order"
+                style={{ textDecoration: "none", width: "100%" }}
+              >
+                <Button fullWidth color="success" variant="contained">
+                  Thanh Toán
+                </Button>
+              </Link>
             </div>
           </div>
         ) : (
-          <Typography display={user=== null && 'none'} textAlign={"center"} mt={40} variant="h1">
+          <Typography
+            display={user === null && "none"}
+            textAlign={"center"}
+            mt={40}
+            variant="h1"
+          >
             Ban da mua j dau :((
           </Typography>
         )}
@@ -177,11 +191,7 @@ function Cart() {
             {cart.map((item, index) => {
               return (
                 <div key={index} className={styles.cart}>
-                  <img
-                    className={styles.left}
-                    src={item.image}
-                    alt="phôto"
-                  />
+                  <img className={styles.left} src={item.image} alt="phôto" />
                   <div className={styles.right}>
                     <p>{item.name}</p>
                     <div className={styles.quantity}>
