@@ -14,30 +14,39 @@ import { Typography } from "@mui/material";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import { useFormik } from "formik";
-import {orderContext} from '../../context/OrderContext'
+import { orderContext } from "../../context/OrderContext";
+import { useState } from "react";
 
 function ThanhToan() {
   const {
     authState: { user },
   } = useContext(AuthContext);
+  const { order } = useContext(orderContext);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const formik = useFormik({
     initialValues: {
-      user:user,
+      user: user,
       fullname: "",
-      phone: '',
-      address: '',
-      paymentMethod: ''
+      phone: "",
+      address: "",
+      paymentMethod: "",
     },
     onSubmit: async (values) => {
-      console.log(values);
+      const products = order.map((item) => {
+        return {
+          name: item.product.name,
+          price: item.product.price * item.quantity,
+        };
+      });
+      const price = products.map((item) => item.price);
+      const totalPrice = price.reduce((pre, curr) => pre + curr);
+      setTotalPrice(totalPrice);
+      const data = { products, ...values, totalPrice };
     },
   });
-
-  const {order} = useContext(orderContext);
-  console.log(order);
   return (
-    <Stack direction={"row"} mt={7} ml={55} mr={55}>
+    <Stack direction={"row"} mt={7} ml={50} mr={50}>
       <Box minWidth={"50%"}>
         <Typography variant="p">Thông tin thanh toán</Typography>
         {user && (
@@ -61,12 +70,19 @@ function ThanhToan() {
           </Stack>
         )}
         <Stack>
-          {user && <Typography variant='h6' sx={{fontWeight: 'bold'}}>Thêm địa chỉ khác: </Typography>}
+          {user && (
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+              Thêm địa chỉ khác:{" "}
+            </Typography>
+          )}
           {user === null && <Typography>Địa chỉ nhận: </Typography>}
-          <form onSubmit={(e)=>{
-            formik.handleSubmit();
-            e.preventDefault()
-            }} style={{ width: "90%" }}>
+          <form
+            onSubmit={(e) => {
+              formik.handleSubmit();
+              e.preventDefault();
+            }}
+            style={{ width: "90%" }}
+          >
             <FormControl fullWidth margin="normal">
               <InputLabel>Họ và tên</InputLabel>
               <Input
@@ -95,7 +111,7 @@ function ThanhToan() {
                 onChange={formik.handleChange}
               />
             </FormControl>
-            <FormControl fullWidth style={{marginTop: '20px'}}>
+            <FormControl fullWidth style={{ marginTop: "20px" }}>
               <InputLabel id="demo-simple-select-label">
                 Phương thức thanh toán
               </InputLabel>
@@ -113,7 +129,7 @@ function ThanhToan() {
               </Select>
             </FormControl>
 
-            <FormControl fullWidth sx={{marginTop:'20px'}}>
+            <FormControl fullWidth sx={{ marginTop: "20px" }}>
               <Button
                 variant="contained"
                 fullWidth
@@ -126,8 +142,31 @@ function ThanhToan() {
           </form>
         </Stack>
       </Box>
-      <Box minWidth={"50%"} sx={{ backgroundColor: "blue" }}>
-        thong tin
+      <Box minWidth={"50%"} sx={{ backgroundColor: "#FAFAFA" }}>
+        <Stack ml={5} mt={2}>
+          {order.map((item, index) => {
+            return (
+              <Stack key={index} direction='row' spacing={1} mb={1} >
+                <Stack direction="row" spacing={1} minWidth={"75%"}>
+                  <img
+                    style={{ width: "60px", borderRadius: "5px" }}
+                    src={item.product.image}
+                    alt=""
+                  />
+                  <Typography>
+                    {item.product.name} x {item.quantity}
+                  </Typography>
+                </Stack>
+                <Typography style={{minWidth:'25%'}}>
+                  {new Intl.NumberFormat("de-De", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(item.product.price * item.quantity)}
+                </Typography>
+              </Stack>
+            );
+          })}
+        </Stack>
       </Box>
     </Stack>
   );

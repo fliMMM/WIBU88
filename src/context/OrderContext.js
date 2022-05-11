@@ -1,4 +1,6 @@
+import axios from "axios";
 import { createContext, useState } from "react";
+import { apiUrl } from "./constants";
 
 export const orderContext = createContext(null);
 
@@ -9,7 +11,16 @@ const OrderContextProvider = ({children}) =>{
     setOrder(list);
   }
 
-  const value = {addToOrder, order}
+  const addNewOrder = async(data) =>{
+    try{
+      const res = await axios.post()
+      return res.data;
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  const value = {addToOrder, order,addNewOrder}
   return(
     <orderContext.Provider value = {value}>
       {children}
