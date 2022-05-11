@@ -3,12 +3,11 @@ import { Nav, NavLink, Bars, NavMenu, NavBtnLink } from "./style";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import styles from './Header.module.css';
 import {useState} from 'react';
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { useMediaQuery } from "@mui/material";
 
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
-import { useEffect } from "react";
 
 const Header = () => {
   const [menu, setMenu] = useState(false)  
@@ -30,12 +29,12 @@ const Header = () => {
           />
           <img
             style={{
-              height: "50px",
+              height: "65px",
               borderRadius: "10px",
               transform: "scale(0.80)",
-              marginLeft: "-17px",
+              marginLeft: "-30px",
             }}
-            src={require("../../../image/logo1.png")}
+            src={require("../../../image/logo_final.png")}
             alt="logo"
           />
         </NavLink>
