@@ -69,8 +69,17 @@ const ProductContextProvider = ({ children }) => {
     }
   }
 
+  const getProductByCat = async (cat) => {
+    try{
+      const res = await axios.post(`${apiUrl}/products/home/`, cat);
+      return res.data
+    }catch(error){
+      return { success: false, message: error.response.data.message };
+    }
+  }
 
-  const value = { Add, getAll, getProductById, product1,updateProduct,deleteProduct,listProduct };
+
+  const value = { Add, getAll,getProductByCat, getProductById, product1,updateProduct,deleteProduct,listProduct };
   return (
     <ProductContext.Provider value={value}>{children}</ProductContext.Provider>
   );

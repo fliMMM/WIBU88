@@ -1,14 +1,16 @@
 import React from "react";
-import SachMoi from "./components/SachMoi/SachMoi";
+import Slide from "./components/Slide/Slide";
 import Banner from "./components/Banner/Banner";
-import SachBanChay from "./components/SachBanChay/SachBanChay";
+
+const categories = [{cat:'new', title: 'Truyện mới cập nhật'}, {cat: 'fantasy', title:'Truyện thanh giả tưởng'}]
 
 function Home() {
   return (
     <div>
       <Banner/>
-      <SachMoi/>
-      {/* <SachBanChay/> */}
+      {categories.map((cat, index) =>{
+        return <Slide key={index} cat ={cat}/>
+      })}
     </div>
   );
 }

@@ -117,7 +117,7 @@ function ProductDetail() {
             {/* <Typography component="legend" variant="p">
           <b>Yêu thích</b>
         </Typography> */}
-            <StyledRating
+            {/* <StyledRating
               name="customized-color"
               defaultValue={product?.rating}
               getLabelText={(value) =>
@@ -126,7 +126,7 @@ function ProductDetail() {
               precision={1}
               icon={<FavoriteIcon fontSize="inherit" />}
               emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-            />
+            /> */}
           </div>
           <br />
           <div>

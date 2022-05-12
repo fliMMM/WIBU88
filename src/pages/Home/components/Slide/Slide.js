@@ -4,31 +4,35 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { apiUrl } from "../../../../context/constants";
 import Swipers from "../Swiper/Swiper";
+import { ProductContext } from "../../../../context/ProductContext";
+import { useContext } from "react";
 
-function SachMoi() {
+function Slide({cat}) {
   const navigate = useNavigate();
   const [product, setProduct] = useState([]);
 
+  const { getProductByCat } = useContext(ProductContext);
+
+  const getData = async () => {
+    const _cat = {cat:cat.cat};
+    const res = await getProductByCat(_cat);
+    setProduct(res.data);
+  };
   useEffect(() => {
-    axios
-      .get(`${apiUrl}/products/new`)
-      .then((res) => setProduct(res.data.data));
+    getData();
   }, []);
-  //console.log(product);
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Typography
         variant="h4"
         style={{ textAlign: "center", margin: "30px 0 20px 0" }}
       >
-        Truyện mới cập nhật
+        {cat.title}
       </Typography>
-      <Swipers product = {product}/>
-      
+      {product&& <Swipers product={product} />}
+
       <div
         style={{
           width: "100%",
@@ -49,4 +53,4 @@ function SachMoi() {
   );
 }
 
-export default SachMoi;
+export default Slide;

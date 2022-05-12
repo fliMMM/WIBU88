@@ -1,14 +1,22 @@
-import React from 'react';
-import IconButton from '@mui/material/IconButton';
-import MenuBookOutlinedIcon from '@mui/icons-material/MenuBookOutlined';
-import Tooltip from '@mui/material/Tooltip';
-import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
-import Logout from '@mui/icons-material/Logout';
-import { Box, Menu, MenuItem, ListItemIcon, Divider, Avatar } from '@mui/material';
-import { useContext } from 'react';
+import React from "react";
+import IconButton from "@mui/material/IconButton";
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
+import Tooltip from "@mui/material/Tooltip";
+import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
+import Logout from "@mui/icons-material/Logout";
+import {
+  Box,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  Divider,
+  Avatar,
+} from "@mui/material";
+import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
+import { Link } from "react-router-dom";
 
-export default function UserOption({userName}) {
+export default function UserOption({ userName }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -17,17 +25,17 @@ export default function UserOption({userName}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const {logoutUser} = useContext(AuthContext)
+  const { logoutUser } = useContext(AuthContext);
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+      <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
             size="small"
-            aria-controls={open ? 'account-menu' : undefined}
+            aria-controls={open ? "account-menu" : undefined}
             aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
+            aria-expanded={open ? "true" : undefined}
           >
             <Avatar sx={{ width: 32, height: 32 }}>U</Avatar>
           </IconButton>
@@ -42,48 +50,58 @@ export default function UserOption({userName}) {
         PaperProps={{
           elevation: 0,
           sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            overflow: "visible",
+            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
             mt: 1.5,
-            '& .MuiAvatar-root': {
+            "& .MuiAvatar-root": {
               width: 32,
               height: 32,
               ml: -0.5,
               mr: 1,
             },
-            '&:before': {
+            "&:before": {
               content: '""',
-              display: 'block',
-              position: 'absolute',
+              display: "block",
+              position: "absolute",
               top: 0,
               right: 14,
               width: 10,
               height: 10,
-              bgcolor: 'background.paper',
-              transform: 'translateY(-50%) rotate(45deg)',
+              bgcolor: "background.paper",
+              transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
           },
         }}
-        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <MenuItem>
           <Avatar /> {userName}
         </MenuItem>
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <LocalMallOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          Lịch sử mua hàng
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <MenuBookOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          Đọc online
-        </MenuItem>
+        <Link
+          to="orderHistory"
+          style={{ textDecoration: "none", color: "#4A4A4A" }}
+        >
+          <MenuItem>
+            <ListItemIcon>
+              <LocalMallOutlinedIcon fontSize="small"/>
+            </ListItemIcon>
+            Lịch sử mua hàng
+          </MenuItem>
+        </Link>
+        <Link
+          to="readOnline"
+          style={{ textDecoration: "none", color: "#4A4A4A" }}
+        >
+          <MenuItem>
+            <ListItemIcon>
+              <LocalMallOutlinedIcon fontSize="small"/>
+            </ListItemIcon>
+            Đọc trực tuyến
+          </MenuItem>
+        </Link>
         <MenuItem onClick={logoutUser}>
           <ListItemIcon>
             <Logout fontSize="small" />

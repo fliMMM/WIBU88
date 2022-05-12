@@ -1,6 +1,5 @@
 import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
-import AuthContextProvider from "./context/AuthContext";
 import ProductContextProvider from "./context/ProductContext";
 import CartContextProvider from "./context/CartContext";
 import OrderContextProvider from "./context/OrderContext";
@@ -9,7 +8,8 @@ import Header from "./components/AppLayouts/Header/Header";
 import { SnackbarProvider } from "notistack";
 import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
-//import Footer from './AppLayouts/Footer/Footer'
+import ReadOnline from "./pages/ReadOnline";
+import OrderHistory from "./pages/orderHistory";
 import Home from "./pages/Home/Home";
 const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
@@ -50,7 +50,13 @@ function App() {
                   {isAuthenticated && (
                     <Route path="order" element={<ThanhToan />} />
                   )}
-                  
+                  {isAuthenticated && (
+                    <Route path="orderHistory" element={<OrderHistory />} />
+                  )}
+                  {isAuthenticated && (
+                    <Route path="readOnline" element={<ReadOnline/>} />
+                  )}
+
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>
