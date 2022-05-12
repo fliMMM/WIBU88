@@ -23,16 +23,17 @@ function ThanhToan() {
     authState: { user },
   } = useContext(AuthContext);
   const { order, addNewOrder } = useContext(orderContext);
-  const {updateToPaidCart} = useContext(CartContext);
+  const { updateToPaidCart } = useContext(CartContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
-  const { enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const products = order.map((item) => {
       return {
         name: item.product.name,
         price: item.product.price * item.quantity,
+        quantity: item.quantity,
       };
     });
     setProducts(products);
@@ -46,6 +47,7 @@ function ThanhToan() {
   const formik = useFormik({
     initialValues: {
       user: user,
+      userId: user._id,
       fullname: "",
       phone: "",
       address: "",
@@ -53,7 +55,7 @@ function ThanhToan() {
     },
     onSubmit: async (values) => {
       const data = { products, ...values, totalPrice };
-      const res = await addNewOrder(data); 
+      const res = await addNewOrder(data);
       if (res.success === true) {
         await updateToPaidCart();
         enqueueSnackbar(res.message, { variant: "success" });

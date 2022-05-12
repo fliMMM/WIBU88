@@ -20,7 +20,16 @@ const OrderContextProvider = ({children}) =>{
     }
   }
 
-  const value = {addToOrder, order,addNewOrder}
+  const getHistory = async () =>{
+    try{
+      const res  = await axios.get(`${apiUrl}/orders/`);
+      return res.data
+    }catch(e){
+      console.log(e);
+    }
+  }
+
+  const value = {addToOrder, order,addNewOrder, getHistory}
   return(
     <orderContext.Provider value = {value}>
       {children}
