@@ -47,11 +47,20 @@ function CartContextProvider({ children }) {
     }
   }
 
+  const updateToPaidCart = async() =>{
+    try {
+      const res = await axios.put(`${apiUrl}/cart/update`);
+      return res;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const value = { addToCart, cart, getCartList ,deleteCart };
+  const value = { addToCart, cart, getCartList ,deleteCart, updateToPaidCart };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 

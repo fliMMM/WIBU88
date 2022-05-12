@@ -16,6 +16,7 @@ import { CartContext } from "../../context/CartContext";
 import { useContext } from "react";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import { useSnackbar } from "notistack";
+import { AuthContext } from "../../context/AuthContext";
 
 const StyledRating = styled(Rating)({
   "& .MuiRating-iconFilled": {
@@ -31,12 +32,15 @@ function ProductDetail() {
   const [product, setProduct] = useState();
   const { addToCart } = useContext(CartContext);
   const [cart, setCart] = useState([]);
-  const { enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
+  const {
+    authState: { isAuthenticated },
+  } = useContext(AuthContext);
 
-  useEffect(()=>{
-    const cart = JSON.parse(localStorage.getItem('cart'));
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart"));
     setCart(cart);
-  },[])
+  }, []);
 
   const getData = async () => {
     try {
@@ -48,8 +52,12 @@ function ProductDetail() {
   };
 
   const handleAddToCart = (id) => {
-    addToCart(id);
-    enqueueSnackbar('Thêm vào gió hàng thành công', { variant: "success" });
+    if (isAuthenticated === true) {
+      addToCart(id);
+      enqueueSnackbar("Thêm vào gió hàng thành công", { variant: "success" });
+    } else {
+      enqueueSnackbar("Đăng nhập đi bạn!!", { variant: "warning" });
+    }
   };
 
   useEffect(() => {
@@ -61,12 +69,14 @@ function ProductDetail() {
         <img src={product?.image} alt="" />
         <div className={styles.right}>
           <p className={styles.name}>{product?.name}</p>
-          <Typography mb={'15px'} variant="h4" color={"red"}>Giá: 
-              {' ' + new Intl.NumberFormat("de-De", {
+          <Typography mb={"15px"} variant="h4" color={"red"}>
+            Giá:
+            {" " +
+              new Intl.NumberFormat("de-De", {
                 style: "currency",
                 currency: "VND",
               }).format(product?.price)}
-            </Typography>
+          </Typography>
           <div className={styles.info}>
             <Typography>
               <b>Tác Giả: </b> {product?.author}
@@ -103,12 +113,11 @@ function ProductDetail() {
               <b>Bộ sách: </b>
               {product?.combo}
             </Typography>
-            
 
             {/* <Typography component="legend" variant="p">
           <b>Yêu thích</b>
         </Typography> */}
-            {/* <StyledRating
+            <StyledRating
               name="customized-color"
               defaultValue={product?.rating}
               getLabelText={(value) =>
@@ -117,7 +126,7 @@ function ProductDetail() {
               precision={1}
               icon={<FavoriteIcon fontSize="inherit" />}
               emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-            /> */}
+            />
           </div>
           <br />
           <div>

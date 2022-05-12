@@ -14,6 +14,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { useContext, useEffect } from "react";
 import { useFormik } from "formik";
 import { orderContext } from "../../context/OrderContext";
+import { CartContext } from "../../context/CartContext";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
 
@@ -22,6 +23,7 @@ function ThanhToan() {
     authState: { user },
   } = useContext(AuthContext);
   const { order, addNewOrder } = useContext(orderContext);
+  const {updateToPaidCart} = useContext(CartContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
   const { enqueueSnackbar} = useSnackbar();
@@ -51,8 +53,9 @@ function ThanhToan() {
     },
     onSubmit: async (values) => {
       const data = { products, ...values, totalPrice };
-      const res = await addNewOrder(data);
+      const res = await addNewOrder(data); 
       if (res.success === true) {
+        await updateToPaidCart();
         enqueueSnackbar(res.message, { variant: "success" });
       }
       if (res.success === false) {

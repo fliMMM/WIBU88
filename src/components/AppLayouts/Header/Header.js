@@ -1,24 +1,28 @@
 import React from "react";
 import { Nav, NavLink, Bars, NavMenu, NavBtnLink } from "./style";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import styles from './Header.module.css';
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import styles from "./Header.module.css";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useMediaQuery } from "@mui/material";
+import UserOption from "./User";
 
 import { useContext } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 
 const Header = () => {
-  const [menu, setMenu] = useState(false)  
-  const isMobile = useMediaQuery('(min-width:768px)');
-  const handleMenu = ()=>{
+  const [menu, setMenu] = useState(false);
+  //const isMobile = useMediaQuery('(min-width:768px)');
+  const handleMenu = () => {
     setMenu(!menu);
-  }
+  };
 
-  const {authState:{isAuthenticated, user}, logoutUser} = useContext(AuthContext)
+  const {
+    authState: { isAuthenticated, user },
+    logoutUser,
+  } = useContext(AuthContext);
 
-  return(
+  return (
     <div>
       <Nav>
         <NavLink to="/">
@@ -39,7 +43,7 @@ const Header = () => {
           />
         </NavLink>
         <Bars onClick={handleMenu} />
-        {!isMobile ? <div className={menu ? styles.active : styles.disale}>
+        {/* {!isMobile ? <div className={menu ? styles.active : styles.disale}>
           <Link to="/cart" activestyle="true">
             <ShoppingCartOutlinedIcon style={{ marginRight: "5px" }} />
             Giỏ Hàng
@@ -55,15 +59,12 @@ const Header = () => {
             </Link>
           )}
           {!isAuthenticated && <Link to="/sign-in">Đăng Nhập</Link>}
-        </div>: ""}
-        <NavMenu >
-          <NavLink to="/cart" activestyle="true">
-            <ShoppingCartOutlinedIcon style={{ marginRight: "5px" }} />
-            Giỏ Hàng
-          </NavLink>
+        </div>: ""} */}
+        <NavMenu>
           {isAuthenticated && (
-            <NavLink to="/user-profile" activestyle="true">
-              {user.username}
+            <NavLink to="/cart" activestyle="true">
+              <ShoppingCartOutlinedIcon style={{ marginRight: "5px" }} />
+              Giỏ Hàng
             </NavLink>
           )}
           {!isAuthenticated && (
@@ -72,8 +73,9 @@ const Header = () => {
             </NavLink>
           )}
           {!isAuthenticated && <NavBtnLink to="/sign-in">Đăng Nhập</NavBtnLink>}
-          {isAuthenticated && <NavBtnLink to="/" onClick={logoutUser}>Đăng xuất</NavBtnLink>}
-          
+          {isAuthenticated && (
+            <UserOption userName={user.username} Logout={logoutUser} />
+          )}
         </NavMenu>
       </Nav>
     </div>
