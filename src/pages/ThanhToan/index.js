@@ -8,6 +8,7 @@ import {
   Select,
   MenuItem,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { AuthContext } from "../../context/AuthContext";
@@ -27,6 +28,7 @@ function ThanhToan() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const products = order.map((item) => {
@@ -55,12 +57,15 @@ function ThanhToan() {
     },
     onSubmit: async (values) => {
       const data = { products, ...values, totalPrice };
+      setLoading(true);
       const res = await addNewOrder(data);
       if (res.success === true) {
         await updateToPaidCart();
+        setLoading(false);
         enqueueSnackbar(res.message, { variant: "success" });
       }
       if (res.success === false) {
+        setLoading(false);
         enqueueSnackbar(res.message, { variant: "error" });
       }
     },
@@ -132,7 +137,10 @@ function ThanhToan() {
               />
             </FormControl>
             <FormControl fullWidth style={{ marginTop: "20px" }}>
-              <InputLabel id="demo-simple-select-label" style={{ marginTop: "-10px" }}>
+              <InputLabel
+                id="demo-simple-select-label"
+                style={{ marginTop: "-10px" }}
+              >
                 Phương thức thanh toán
               </InputLabel>
               <Select
@@ -149,7 +157,11 @@ function ThanhToan() {
               </Select>
             </FormControl>
             {formik.values.paymentMethod === "QR" && (
-              <img src={require("../../image/rickRollQR.png")} style={{width:'300px'}} alt="" />
+              <img
+                src={require("../../image/rickRollQR.png")}
+                style={{ width: "300px" }}
+                alt=""
+              />
             )}
             <FormControl fullWidth sx={{ marginTop: "20px" }}>
               <Button
@@ -157,6 +169,11 @@ function ThanhToan() {
                 fullWidth
                 color="success"
                 type="submit"
+                startIcon={
+                  loading && (
+                    <CircularProgress size={16} style={{ color: "#fff" }} />
+                  )
+                }
               >
                 Thanh toán
               </Button>
