@@ -12,13 +12,15 @@ import {
   IconButton,
   InputAdornment,
 } from "@mui/material";
-import { Login, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Login, Visibility, VisibilityOff } from "@mui/icons-material";
 import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+
+import { useSnackbar } from "notistack";
 
 const validationSchema = yup.object({
   username: yup.string().required("Bạn chưa nhập tài khoản!"),
@@ -42,14 +44,16 @@ const validationSchema = yup.object({
     .required("Bạn chưa điền mật khẩu xác nhận!"),
 });
 function DangKi() {
-
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const {register} = useContext(AuthContext);
-const navigate = useNavigate();
+  const { register } = useContext(AuthContext);
+
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
   const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleClickShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
+  const handleClickShowConfirmPassword = () =>
+    setShowConfirmPassword(!showConfirmPassword);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -60,22 +64,31 @@ const navigate = useNavigate();
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
-      try{
-        setLoading(true)
+      try {
+        setLoading(true);
         const res = await register(values);
-        if(res.success ===true){
-          navigate('/')
-          setLoading(false)
+        if (res.success === true) {
+          navigate("/");
+          setLoading(false);
+        } else {
+          setLoading(false);
+          enqueueSnackbar(res.message, { variant: "error" });
         }
-      }catch(err){
+      } catch (err) {
         console.log(err);
-        setLoading(false)
+        setLoading(false);
       }
     },
   });
 
   return (
-    <Grid container paddingTop={"50px"} justify="center" alignContent="center" marginBottom={"-155px"}>
+    <Grid
+      container
+      paddingTop={"50px"}
+      justify="center"
+      alignContent="center"
+      marginBottom={"-155px"}
+    >
       <Grid
         item
         xs={8}
@@ -139,7 +152,7 @@ const navigate = useNavigate();
               <Input
                 fullWidth
                 name="password"
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 id="password"
                 onChange={formik.handleChange}
                 endAdornment={
@@ -166,7 +179,7 @@ const navigate = useNavigate();
               <Input
                 fullWidth
                 name="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'password'}
+                type={showConfirmPassword ? "text" : "password"}
                 id="confirmPassword"
                 onChange={formik.handleChange}
                 endAdornment={
@@ -176,7 +189,11 @@ const navigate = useNavigate();
                       onClick={handleClickShowConfirmPassword}
                       edge="end"
                     >
-                      {!showConfirmPassword ? <VisibilityOff /> : <Visibility />}
+                      {!showConfirmPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
                     </IconButton>
                   </InputAdornment>
                 }
@@ -192,12 +209,12 @@ const navigate = useNavigate();
             </FormControl>
             <FormControl fullWidth margin="normal">
               <Button
-                style={{ backgroundColor: "#d1cbcb", margin : "0 auto" }}
+                style={{ backgroundColor: "#d1cbcb", margin: "0 auto" }}
                 variant="extendedFab"
                 type="submit"
                 startIcon={
                   loading ? (
-                    <CircularProgress size={16} style={{ color: '#fff' }} />
+                    <CircularProgress size={16} style={{ color: "#fff" }} />
                   ) : (
                     <Login />
                   )

@@ -21,6 +21,7 @@ import { useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 const validationSchema = yup.object({
   username: yup.string().required("Bạn chưa nhập tài khoản!"),
@@ -36,6 +37,7 @@ function DangNhap() {
   const [loading, setLoading] = useState(false);
   const {login} = useContext(AuthContext);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleClickShowPassword = () => setShowPassword(!showPassword);
   const formik = useFormik({
@@ -53,9 +55,9 @@ function DangNhap() {
           setLoading(false)
         }else{
           setLoading(false)
+          enqueueSnackbar(res.message, { variant: "error" })
         }
       }catch(err){
-        console.log(err);
         setLoading(false)
       }
     },
