@@ -105,7 +105,9 @@ function Cart() {
   };
 
   if (fetching === true) {
-    return <CircularProgress />;
+    return (
+      <div style={{margin: '400px 50%', minWidth:'100%'}}><CircularProgress /></div>
+    )
   }
   return (
     <>

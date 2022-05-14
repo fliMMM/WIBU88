@@ -1,6 +1,5 @@
 import React from "react";
-import { useMediaQuery } from "@mui/material";
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Typography, CircularProgress } from "@mui/material";
 import ShoppingCartOutlined from "@mui/icons-material/ShoppingCartOutlined";
 import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -33,6 +32,7 @@ function ProductDetail() {
   const { addToCart } = useContext(CartContext);
   const [cart, setCart] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
+  const [fetching, setFetching] = useState(false);
   const {
     authState: { isAuthenticated },
   } = useContext(AuthContext);
@@ -48,8 +48,10 @@ function ProductDetail() {
 
   const getData = async () => {
     try {
+      setFetching(true)
       const res = await axios.get(`${apiUrl}/products/${id}`);
       setProduct(res.data.data);
+      setFetching(false);
     } catch (err) {
       console.log(err);
     }
@@ -67,6 +69,13 @@ function ProductDetail() {
   useEffect(() => {
     getData();
   }, []);
+
+  if (fetching === true) {
+    return (
+      <div style={{margin: '400px 50%', minWidth:'100%'}}><CircularProgress /></div>
+    )
+  }
+
   return (
     <div>
       <div className={styles.container}>

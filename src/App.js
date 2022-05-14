@@ -24,7 +24,7 @@ const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 
 function App() {
   const {
-    authState: { isAuthenticated}
+    authState: { isAuthenticated },
   } = useContext(AuthContext);
   return (
     <div style={{ position: "relative" }}>
@@ -33,7 +33,13 @@ function App() {
           <CartContextProvider>
             <OrderContextProvider>
               <Header />
-              <Suspense fallback={<CircularProgress />}>
+              <Suspense
+                fallback={
+                  <div style={{ margin: "400px 50%", minWidth: "100%" }}>
+                    <CircularProgress />
+                  </div>
+                }
+              >
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="sign-up" element={<DangKi />} />
@@ -41,7 +47,6 @@ function App() {
                   <Route path="products" element={<Products />}>
                     <Route path=":id" element={<ProductDetail />} />
                   </Route>
-
 
                   {isAuthenticated && <Route path="cart" element={<Cart />} />}
                   {isAuthenticated && (
@@ -54,7 +59,7 @@ function App() {
                     <Route path="orderHistory" element={<OrderHistory />} />
                   )}
                   {isAuthenticated && (
-                    <Route path="readOnline" element={<ReadOnline/>} />
+                    <Route path="readOnline" element={<ReadOnline />} />
                   )}
 
                   <Route path="*" element={<NotFound />} />
