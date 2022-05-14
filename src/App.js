@@ -11,14 +11,12 @@ import { AuthContext } from "./context/AuthContext";
 import ReadOnline from "./pages/ReadOnline";
 import OrderHistory from "./pages/orderHistory";
 import Home from "./pages/Home/Home";
+import ProductDetail from "./pages/ProductDetail/ProductDetail";
 const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const User = React.lazy(() => import("./pages/UserAccount/User"));
 const Products = React.lazy(() => import("./pages/Products/Products"));
-const ProductDetail = React.lazy(() =>
-  import("./pages/ProductDetail/ProductDetail")
-);
 const ThanhToan = React.lazy(() => import("./pages/ThanhToan/index"));
 const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 

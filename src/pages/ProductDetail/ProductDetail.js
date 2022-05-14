@@ -50,8 +50,8 @@ function ProductDetail() {
     try {
       setFetching(true)
       const res = await axios.get(`${apiUrl}/products/${id}`);
-      setProduct(res.data.data);
       setFetching(false);
+      setProduct(res.data.data);
     } catch (err) {
       console.log(err);
     }
