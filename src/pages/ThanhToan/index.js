@@ -62,11 +62,11 @@ function ThanhToan() {
       if (res.success === true) {
         await updateToPaidCart();
         setLoading(false);
-        enqueueSnackbar(res.message, { variant: "success" });
+        enqueueSnackbar(res.message, { variant: "success", autoHideDuration: 2000 });
       }
       if (res.success === false) {
         setLoading(false);
-        enqueueSnackbar(res.message, { variant: "error" });
+        enqueueSnackbar(res.message, { variant: "error", autoHideDuration: 2000 });
       }
     },
   });

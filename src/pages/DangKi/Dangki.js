@@ -72,7 +72,7 @@ function DangKi() {
           setLoading(false);
         } else {
           setLoading(false);
-          enqueueSnackbar(res.message, { variant: "error" });
+          enqueueSnackbar(res.message, { variant: "error", autoHideDuration: 2000 });
         }
       } catch (err) {
         console.log(err);

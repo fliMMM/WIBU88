@@ -37,6 +37,10 @@ function ProductDetail() {
     authState: { isAuthenticated },
   } = useContext(AuthContext);
 
+  useEffect(()=>{
+    window.scroll(0,0);
+  },[])
+
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
     setCart(cart);
@@ -54,9 +58,9 @@ function ProductDetail() {
   const handleAddToCart = (id) => {
     if (isAuthenticated === true) {
       addToCart(id);
-      enqueueSnackbar("Thêm vào gió hàng thành công", { variant: "success" });
+      enqueueSnackbar("Thêm vào gió hàng thành công", { variant: "success", autoHideDuration: 2000 });
     } else {
-      enqueueSnackbar("Đăng nhập đi bạn!!", { variant: "warning" });
+      enqueueSnackbar("Đăng nhập đi bạn!!", { variant: "warning", autoHideDuration: 2000 });
     }
   };
 
@@ -80,12 +84,6 @@ function ProductDetail() {
           <div className={styles.info}>
             <Typography>
               <b>Tác Giả: </b> {product?.author}
-            </Typography>
-            <Typography>
-              <b>Thể Loại: </b>
-              {product?.categories.map((cate) => {
-                return cate + ",";
-              })}
             </Typography>
             <Typography>
               <b>Đối tượng: </b>
@@ -117,16 +115,14 @@ function ProductDetail() {
             {/* <Typography component="legend" variant="p">
           <b>Yêu thích</b>
         </Typography> */}
-            {/* <StyledRating
+            <StyledRating
               name="customized-color"
               defaultValue={product?.rating}
-              getLabelText={(value) =>
-                `${value} Heart${value !== 1 ? "s" : ""}`
-              }
-              precision={1}
+              value={3.5}
+              precision={0.5}
               icon={<FavoriteIcon fontSize="inherit" />}
               emptyIcon={<FavoriteBorderIcon fontSize="inherit" />}
-            /> */}
+            />
           </div>
           <br />
           <div>

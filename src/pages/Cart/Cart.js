@@ -7,20 +7,23 @@ import { AuthContext } from "../../context/AuthContext";
 import { orderContext } from "../../context/OrderContext";
 import { useContext } from "react";
 import { useEffect } from "react";
-import { Typography } from "@mui/material";
-import { Link} from "react-router-dom";
+import { Typography, CircularProgress } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function Cart() {
   const [cart, setCart] = useState([]);
   const [reload, setReload] = useState(false);
+  const [fetching, setFetching] = useState(false);
   const {
     authState: { user },
   } = useContext(AuthContext);
   const { getCartList, deleteCart } = useContext(CartContext);
-  const {addToOrder} = useContext(orderContext);
+  const { addToOrder } = useContext(orderContext);
 
   const getAll = async () => {
+    setFetching(true);
     const res = await getCartList();
+    setFetching(false);
     setCart(res.data.data);
   };
 
@@ -35,9 +38,9 @@ function Cart() {
     }
   }, [reload]);
 
-  useEffect(() =>{
+  useEffect(() => {
     addToOrder(cart);
-  },[addToOrder, cart])
+  }, [addToOrder, cart]);
 
   const handleIncreaseQuantity = (id) => {
     const newCart = [...cart];
@@ -100,101 +103,26 @@ function Cart() {
       setReload(!reload);
     }
   };
+
+  if (fetching === true) {
+    return <CircularProgress />;
+  }
   return (
     <>
-      <>
-        {user && cart.length !== 0 ? (
-          <div className={styles.container}>
-            {cart.map((item, index) => {
-              return (
-                <div key={index} className={styles.cart}>
-                  <img
-                    className={styles.left}
-                    src={item.product.image}
-                    alt="phôto"
-                  />
-                  <div className={styles.right}>
-                    <p>{item.product.name}</p>
-                    <div className={styles.quantity}>
-                      {item.quantity > 0 && (
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => handleDecreaseQuantity(item._id)}
-                        >
-                          -
-                        </Button>
-                      )}
-                      {item.quantity === 0 && (
-                        <Button
-                          onClick={() => handleDeleteCart(item._id)}
-                          variant="contained"
-                          color="error"
-                        >
-                          Xóa
-                        </Button>
-                      )}
-                      <input
-                        value={item.quantity}
-                        onChange={(e) => handleInput(e, item._id)}
-                      />
-                      <Button
-                        variant="contained"
-                        color="success"
-                        onClick={() => handleIncreaseQuantity(item._id)}
-                      >
-                        +
-                      </Button>
-                    </div>
-                  </div>
-                  <p className={styles.price}>
-                    {new Intl.NumberFormat("de-De", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(item.product.price * item.quantity)}
-                  </p>
-                </div>
-              );
-            })}
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Link
-                to="/order"
-                style={{ textDecoration: "none", width: "100%" }}
-              >
-                <Button fullWidth color="success" variant="contained">
-                  Thanh Toán
-                </Button>
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <Typography
-            display={user === null && "none"}
-            textAlign={"center"}
-            mt={40}
-            variant="h1"
-          >
-            Ban da mua j dau :((
-          </Typography>
-        )}
-      </>
-      <>
-        {user === null && (
-          <div className={styles.container}>
-            {cart.map((item, index) => {
-              return (
-                <div key={index} className={styles.cart}>
-                  <img className={styles.left} src={item.image} alt="phôto" />
-                  <div className={styles.right}>
-                    <p>{item.name}</p>
-                    <div className={styles.quantity}>
+      {user && cart.length !== 0 ? (
+        <div className={styles.container}>
+          {cart.map((item, index) => {
+            return (
+              <div key={index} className={styles.cart}>
+                <img
+                  className={styles.left}
+                  src={item.product.image}
+                  alt="phôto"
+                />
+                <div className={styles.right}>
+                  <p>{item.product.name}</p>
+                  <div className={styles.quantity}>
+                    {item.quantity > 0 && (
                       <Button
                         variant="contained"
                         color="error"
@@ -202,57 +130,63 @@ function Cart() {
                       >
                         -
                       </Button>
-                      <input
-                        value={item.quantity}
-                        onChange={(e) => handleInput(e, item._id)}
-                      />
-                      <Button
-                        variant="contained"
-                        color="success"
-                        onClick={() => handleIncreaseQuantity(item._id)}
-                      >
-                        +
-                      </Button>
-                    </div>
+                    )}
                     {item.quantity === 0 && (
                       <Button
                         onClick={() => handleDeleteCart(item._id)}
                         variant="contained"
                         color="error"
-                        sx={{
-                          marginTop: "15px",
-                          marginLeft: "27%",
-                          width: "45%",
-                        }}
                       >
                         Xóa
                       </Button>
                     )}
+                    <input
+                      value={item.quantity}
+                      onChange={(e) => handleInput(e, item._id)}
+                    />
+                    <Button
+                      variant="contained"
+                      color="success"
+                      onClick={() => handleIncreaseQuantity(item._id)}
+                    >
+                      +
+                    </Button>
                   </div>
-                  <p className={styles.price}>
-                    {new Intl.NumberFormat("de-De", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(item.price * item.quantity)}
-                  </p>
                 </div>
-              );
-            })}
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+                <p className={styles.price}>
+                  {new Intl.NumberFormat("de-De", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(item.product.price * item.quantity)}
+                </p>
+              </div>
+            );
+          })}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/order" style={{ textDecoration: "none", width: "100%" }}>
               <Button fullWidth color="success" variant="contained">
                 Thanh Toán
               </Button>
-            </div>
+            </Link>
           </div>
-        )}
-      </>
+        </div>
+      ) : (
+        <Typography
+          display={user === null && "none"}
+          textAlign={"center"}
+          mt={40}
+          variant="h1"
+        >
+          Ban da mua j dau :((
+        </Typography>
+      )}
     </>
   );
 }
