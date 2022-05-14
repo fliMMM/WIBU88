@@ -132,7 +132,7 @@ function ThanhToan() {
               />
             </FormControl>
             <FormControl fullWidth style={{ marginTop: "20px" }}>
-              <InputLabel id="demo-simple-select-label">
+              <InputLabel id="demo-simple-select-label" style={{ marginTop: "-10px" }}>
                 Phương thức thanh toán
               </InputLabel>
               <Select
@@ -145,10 +145,12 @@ function ThanhToan() {
                 <MenuItem value="COD">Thanh toán khi giao hàng (COD)</MenuItem>
                 <MenuItem value="MOMO">Ví Momo</MenuItem>
                 <MenuItem value="ZALO">ZaloPay</MenuItem>
-                <MenuItem value="SHOPEE">ShopeePay</MenuItem>
+                <MenuItem value="QR">QR</MenuItem>
               </Select>
             </FormControl>
-
+            {formik.values.paymentMethod === "QR" && (
+              <img src={require("../../image/rickRollQR.png")} style={{width:'300px'}} alt="" />
+            )}
             <FormControl fullWidth sx={{ marginTop: "20px" }}>
               <Button
                 variant="contained"
@@ -226,7 +228,7 @@ function ThanhToan() {
               {new Intl.NumberFormat("de-De", {
                 style: "currency",
                 currency: "VND",
-              }).format(35000)}
+              }).format(20000)}
             </Typography>
           </Stack>
         </Stack>
@@ -242,7 +244,7 @@ function ThanhToan() {
             {new Intl.NumberFormat("de-De", {
               style: "currency",
               currency: "VND",
-            }).format(totalPrice + 35000)}
+            }).format(totalPrice + 20000)}
           </Typography>
         </Stack>
       </Box>
