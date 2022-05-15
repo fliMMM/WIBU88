@@ -68,6 +68,7 @@ const AuthContextProvider = ({children}) =>{
 			type: 'SET_AUTH',
 			payload: { isAuthenticated: false, user: null }
 		})
+    window.location.reload();
 	}
 
   
