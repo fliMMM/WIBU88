@@ -9,6 +9,7 @@ export const CartContext = createContext(null);
 
 function CartContextProvider({ children }) {
   const [cart, setCart] = useState([]);
+  const [amount, setAmount] = useState(0);
   const { listProduct } = useContext(ProductContext);
   const {
     authState: { user },
@@ -32,6 +33,7 @@ function CartContextProvider({ children }) {
   const getCartList = async () => {
     try {
       const res = await axios.get(`${apiUrl}/cart/`);
+      setAmount(res.data.data.length);
       return res;
     } catch (e) {
       console.log(e);
@@ -60,7 +62,7 @@ function CartContextProvider({ children }) {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const value = { addToCart, cart, getCartList ,deleteCart, updateToPaidCart };
+  const value = { addToCart, cart, getCartList ,deleteCart, updateToPaidCart, amount };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 

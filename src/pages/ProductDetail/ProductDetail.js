@@ -29,7 +29,7 @@ function ProductDetail() {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [product, setProduct] = useState();
-  const { addToCart } = useContext(CartContext);
+  const { addToCart, getCartList } = useContext(CartContext);
   const [cart, setCart] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
   const [fetching, setFetching] = useState(false);
@@ -57,9 +57,10 @@ function ProductDetail() {
     }
   };
 
-  const handleAddToCart = (id) => {
+  const handleAddToCart = async (id) => {
     if (isAuthenticated === true) {
-      addToCart(id);
+      await addToCart(id);
+      await getCartList();
       enqueueSnackbar("Thêm vào gió hàng thành công", { variant: "success", autoHideDuration: 2000 });
     } else {
       enqueueSnackbar("Đăng nhập đi bạn!!", { variant: "warning", autoHideDuration: 2000 });

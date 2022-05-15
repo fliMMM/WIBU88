@@ -18,17 +18,19 @@ import { orderContext } from "../../context/OrderContext";
 import { CartContext } from "../../context/CartContext";
 import { useState } from "react";
 import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 function ThanhToan() {
   const {
     authState: { user },
   } = useContext(AuthContext);
   const { order, addNewOrder } = useContext(orderContext);
-  const { updateToPaidCart } = useContext(CartContext);
+  const { updateToPaidCart, getCartList } = useContext(CartContext);
   const [totalPrice, setTotalPrice] = useState(0);
   const [products, setProducts] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const products = order.map((item) => {
@@ -62,11 +64,22 @@ function ThanhToan() {
       if (res.success === true) {
         await updateToPaidCart();
         setLoading(false);
-        enqueueSnackbar(res.message, { variant: "success", autoHideDuration: 2000 });
+        await getCartList();
+
+        await enqueueSnackbar(res.message, {
+          variant: "success",
+          autoHideDuration: 1000,
+        });
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       }
       if (res.success === false) {
         setLoading(false);
-        enqueueSnackbar(res.message, { variant: "error", autoHideDuration: 2000 });
+        enqueueSnackbar(res.message, {
+          variant: "error",
+          autoHideDuration: 2000,
+        });
       }
     },
   });
