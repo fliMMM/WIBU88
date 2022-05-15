@@ -33,13 +33,14 @@ function ProductDetail() {
   const [cart, setCart] = useState([]);
   const { enqueueSnackbar } = useSnackbar();
   const [fetching, setFetching] = useState(false);
+  const [ffetching, setFetchings] = useState(false);
   const {
     authState: { isAuthenticated },
   } = useContext(AuthContext);
 
-  useEffect(()=>{
-    window.scroll(0,0);
-  },[])
+  useEffect(() => {
+    window.scroll(0, 0);
+  }, []);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("cart"));
@@ -48,7 +49,7 @@ function ProductDetail() {
 
   const getData = async () => {
     try {
-      setFetching(true)
+      setFetching(true);
       const res = await axios.get(`${apiUrl}/products/${id}`);
       setFetching(false);
       setProduct(res.data.data);
@@ -59,11 +60,19 @@ function ProductDetail() {
 
   const handleAddToCart = async (id) => {
     if (isAuthenticated === true) {
+      setFetchings(true);
       await addToCart(id);
       await getCartList();
-      enqueueSnackbar("Thêm vào gió hàng thành công", { variant: "success", autoHideDuration: 2000 });
+      setFetchings(false);
+      enqueueSnackbar("Thêm vào gió hàng thành công", {
+        variant: "success",
+        autoHideDuration: 2000,
+      });
     } else {
-      enqueueSnackbar("Đăng nhập đi bạn!!", { variant: "warning", autoHideDuration: 2000 });
+      enqueueSnackbar("Đăng nhập đi bạn!!", {
+        variant: "warning",
+        autoHideDuration: 2000,
+      });
     }
   };
 
@@ -73,8 +82,10 @@ function ProductDetail() {
 
   if (fetching === true) {
     return (
-      <div style={{margin: '400px 50%', minWidth:'100%'}}><CircularProgress /></div>
-    )
+      <div style={{ margin: "400px 50%", minWidth: "100%" }}>
+        <CircularProgress />
+      </div>
+    );
   }
 
   return (
@@ -143,7 +154,18 @@ function ProductDetail() {
               style={{ marginTop: "10px" }}
             >
               Thêm vào giỏ hàng{" "}
-              <ShoppingCartOutlined sx={{ marginLeft: "10px" }} />
+              {ffetching === true ? (
+                <CircularProgress
+                  style={{
+                    marginLeft: "10px",
+                    height: "20px",
+                    width: "20px",
+                    color: "yellow",
+                  }}
+                />
+              ) : (
+                <ShoppingCartOutlined sx={{ marginLeft: "10px" }} />
+              )}
             </Button>
             <Button fullWidth variant="contained" style={{ marginTop: "10px" }}>
               Đọc thử <MenuBookRoundedIcon sx={{ marginLeft: "10px" }} />

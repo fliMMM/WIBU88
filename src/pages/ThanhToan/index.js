@@ -63,10 +63,10 @@ function ThanhToan() {
       const res = await addNewOrder(data);
       if (res.success === true) {
         await updateToPaidCart();
-        setLoading(false);
         await getCartList();
+        setLoading(false);
 
-        await enqueueSnackbar(res.message, {
+        enqueueSnackbar(res.message, {
           variant: "success",
           autoHideDuration: 1000,
         });
