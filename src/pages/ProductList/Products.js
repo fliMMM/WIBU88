@@ -26,6 +26,11 @@ function ProductList() {
   const [data, setData] = useState([]);
   const [fetching, setFetching] = useState(false);
   const { getAll } = useContext(ProductContext);
+  const [page, setPage] = useState(1)
+  const [itemPerPage, setItemPerPAge] = useState(12);
+  const handleChangePage =(e, value) =>{
+    setPage(value)
+  }
   const fetData = async () => {
     setFetching(true);
     const res = await getAll();
@@ -34,7 +39,7 @@ function ProductList() {
   };
   useEffect(() => {
     fetData();
-  }, []);
+  }, [page]);
   return (
     <Box pt={10} minHeight={"calc(100vh - 50px)"} ml={'20%'} mr={'30%'}>
       <Stack direction={"row"} spacing={2}>
@@ -144,7 +149,7 @@ function ProductList() {
           </Stack>
         </Box>
         <Box>
-          <Stack direction={"column"} minWidth="750px" mb={2}>
+          <Stack direction={"column"} minWidth="800px" mb={2}>
             <Stack
               direction={"row"}
               display="flex"
@@ -181,8 +186,8 @@ function ProductList() {
             <Grid container spacing={2}>
               {data.map((item, index) => {
                 return (
-                  index <= 8 && (
-                    <Grid item key={index} xs={4} md={4} lg={4}>
+                  (index >=(itemPerPage * (page-1)) && index<= (itemPerPage * page -1 )) && (
+                    <Grid item key={index} xs={3} md={3} lg={3}>
                       <Card data={item} />
                     </Grid>
                   )
@@ -199,7 +204,7 @@ function ProductList() {
             justifyContent="center"
             alignItems={"center"}
           >
-            <Pagination count={10} variant="outlined" shape="rounded" />
+            <Pagination count={Math.floor(data.length/12) + 1} page={page} onChange={handleChangePage} variant="outlined" shape="rounded" />
           </Stack>
         </Box>
       </Stack>
