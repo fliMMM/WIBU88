@@ -125,7 +125,7 @@ function ProductList() {
               padding={"10px"}
               fontWeight="bold"
             >
-              Khoảng giá
+              Thể loại
             </Typography>
             <FormGroup>
               <FormControlLabel

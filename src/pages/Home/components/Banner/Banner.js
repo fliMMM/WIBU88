@@ -49,7 +49,7 @@ function Banner(){
                       width: "100%",
                     }}
                     src={image?.url}
-                    alt={"Image Banner"}
+                    alt=""
                   />
                 </ImageListItem>
               ))}
