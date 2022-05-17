@@ -120,9 +120,9 @@ function ProductDetail() {
               {product?.soTrang}
             </Typography>
             <Typography>
-              <b>Định dạng: </b>
+              <b>Thể loại: </b>
               {product?.categories.map((cate) => {
-                return cate + ",";
+                return cate + ", ";
               })}
             </Typography>
             <Typography>
