@@ -17,7 +17,7 @@ const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const User = React.lazy(() => import("./pages/UserAccount/User"));
-const ProductList = React.lazy(() => import("./pages/Products/Products"));
+const ProductList = React.lazy(() => import("./pages/ProductList/Products"));
 const ThanhToan = React.lazy(() => import("./pages/ThanhToan/index"));
 const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 
