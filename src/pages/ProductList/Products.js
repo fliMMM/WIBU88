@@ -22,6 +22,16 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 
+const cate = [
+  {label: 'Action', value:'action'},
+  {label: 'Romance', value:'romance'},
+  {label: 'Drama', value:'drama'},
+  {label: 'Sci', value:'action'},
+  {label: 'Comedy', value:'action'},
+  {label: 'School Life', value:'action'},
+  {label: 'Fantasy', value:'action'},
+]
+
 function ProductList() {
   const [data, setData] = useState([]);
   const [fetching, setFetching] = useState(false);
@@ -132,19 +142,14 @@ function ProductList() {
                 control={<Checkbox defaultChecked />}
                 label="Tất cả"
               />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Văn học nước ngoài"
+              {cate.map((item)=>{
+                return(
+                  <FormControlLabel
+                control={<Checkbox/>}
+                label={item.label}
               />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Văn học Việt Nam"
-              />
-              <FormControlLabel control={<Checkbox />} label="Truyện tranh" />
-              <FormControlLabel
-                control={<Checkbox />}
-                label="Kiến thức - khoa học"
-              />
+                )
+              })}
             </FormGroup>
           </Stack>
         </Box>
