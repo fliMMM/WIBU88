@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -7,7 +7,7 @@ import { Navigation, Autoplay } from "swiper";
 import { useNavigate } from "react-router-dom";
 import Card from "../../../../components/Card/Card";
 
-function Swipers({product}) {
+function Swipers({ product }) {
   const navigate = useNavigate();
   return (
     <Swiper

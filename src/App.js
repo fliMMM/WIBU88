@@ -17,7 +17,7 @@ const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
 const User = React.lazy(() => import("./pages/UserAccount/User"));
-const Products = React.lazy(() => import("./pages/Products/Products"));
+const ProductList = React.lazy(() => import("./pages/Products/Products"));
 const ThanhToan = React.lazy(() => import("./pages/ThanhToan/index"));
 const NotFound = React.lazy(() => import("./pages/NotFound/NotFound"));
 
@@ -44,7 +44,8 @@ function App() {
                   <Route path="sign-up" element={<DangKi />} />
                   <Route path="sign-in" element={<DangNhap />} />
                   <Route path="reading-trial" element={<ReadingTrial />} />
-                  <Route path="products" element={<Products />}>
+                  <Route path="all" element={<ProductList/>} />
+                  <Route path="products">
                     <Route path=":id" element={<ProductDetail />} />
                   </Route>
 

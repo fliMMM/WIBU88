@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 function Card({data}) {
   return (
-    <Box>
+    <Box style={{cursor: 'pointer'}}>
       <img style={{ width: "100%", height: "270px" }} src={data.image} alt="" />
       <Typography variant="p">{data.name}</Typography>
       <Typography color={"red"}>
