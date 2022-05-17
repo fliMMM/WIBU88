@@ -17,6 +17,7 @@ function Swipers({ product }) {
         delay: 3000,
         disableOnInteraction: false,
       }}
+      navigation={true}
       breakpoints={{
         400: {
           slidesPerView: 1.25,
