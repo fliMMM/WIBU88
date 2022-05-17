@@ -1,12 +1,11 @@
 import React from "react";
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./cart.module.css";
 import { CartContext } from "../../context/CartContext";
 import { AuthContext } from "../../context/AuthContext";
 import { orderContext } from "../../context/OrderContext";
 import { useContext } from "react";
-import { useEffect } from "react";
 import { Typography, CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -14,6 +13,7 @@ function Cart() {
   const [cart, setCart] = useState([]);
   const [reload, setReload] = useState(false);
   const [fetching, setFetching] = useState(false);
+  const [amount, setAmount] = useState();
   const {
     authState: { user },
   } = useContext(AuthContext);
@@ -103,16 +103,36 @@ function Cart() {
       setReload(!reload);
     }
   };
+  const CalcAmount = () => {
+    const _p = cart.map((item) => {
+      return { quantity: item.quantity, price: item.product.price };
+    });
+    let amount = 0;
+    _p.forEach(item=>{
+      amount += item.quantity * item.price;
+    })
+    setAmount(amount);
+    
+  };
+  useEffect(() => {
+    CalcAmount();
+  }, [cart]);
 
   if (fetching === true) {
     return (
-      <div style={{margin: '400px 50%', minWidth:'100%'}}><CircularProgress /></div>
-    )
+      <div style={{ margin: "400px 50%", minWidth: "100%" }}>
+        <CircularProgress />
+      </div>
+    );
   }
   return (
     <>
       {user && cart.length !== 0 ? (
         <div className={styles.container}>
+          <Typography variant="h5" textAlign={"right"}>Tổng tiền: {new Intl.NumberFormat("de-De", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(amount)} </Typography>
           {cart.map((item, index) => {
             return (
               <div key={index} className={styles.cart}>
@@ -186,7 +206,7 @@ function Cart() {
           mt={40}
           variant="h1"
         >
-          Ban da mua j dau :((
+          Bạn chưa có gì trong giỏ hàng
         </Typography>
       )}
     </>

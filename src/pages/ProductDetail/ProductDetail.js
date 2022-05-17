@@ -187,7 +187,7 @@ function ProductDetail() {
 
       <div className={styles.bottom}>
         <p className={styles.title}>Bình luận</p>
-        <p className={styles.des}>{product?.description}</p>
+        <p className={styles.des}>Truyện hay quá</p>
       </div>
     </div>
   );
