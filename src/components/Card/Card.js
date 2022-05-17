@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { CardActionArea } from "@mui/material";
 
 function Card({data}) {
   return (

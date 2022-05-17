@@ -12,6 +12,7 @@ import ReadOnline from "./pages/ReadOnline";
 import OrderHistory from "./pages/orderHistory";
 import Home from "./pages/Home/Home";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
+import ReadingTrial from "./pages/readingTrial";
 const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
@@ -42,10 +43,12 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="sign-up" element={<DangKi />} />
                   <Route path="sign-in" element={<DangNhap />} />
+                  <Route path="reading-trial" element={<ReadingTrial />} />
                   <Route path="products" element={<Products />}>
                     <Route path=":id" element={<ProductDetail />} />
                   </Route>
 
+                  
                   {isAuthenticated && <Route path="cart" element={<Cart />} />}
                   {isAuthenticated && (
                     <Route path="user-profile" element={<User />} />

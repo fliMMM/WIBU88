@@ -5,7 +5,7 @@ import Rating from "@mui/material/Rating";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import styled from "styled-components";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { apiUrl } from "../../context/constants";
 import axios from "axios";
@@ -34,6 +34,7 @@ function ProductDetail() {
   const { enqueueSnackbar } = useSnackbar();
   const [fetching, setFetching] = useState(false);
   const [ffetching, setFetchings] = useState(false);
+  const navigate = useNavigate();
   const {
     authState: { isAuthenticated },
   } = useContext(AuthContext);
@@ -167,9 +168,15 @@ function ProductDetail() {
                 <ShoppingCartOutlined sx={{ marginLeft: "10px" }} />
               )}
             </Button>
-            <Button fullWidth variant="contained" style={{ marginTop: "10px" }}>
-              Đọc thử <MenuBookRoundedIcon sx={{ marginLeft: "10px" }} />
-            </Button>
+            <Link to="/reading-trial" style={{textDecoration: 'none'}}>
+              <Button
+                fullWidth
+                variant="contained"
+                style={{ marginTop: "10px" }}
+              >
+                Đọc thử <MenuBookRoundedIcon sx={{ marginLeft: "10px" }} />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
