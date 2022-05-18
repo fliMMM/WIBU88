@@ -51,8 +51,8 @@ function ProductList() {
     fetData();
   }, [page]);
   return (
-    <Box pt={10} minHeight={"calc(100vh - 50px)"} ml={'20%'} mr={'30%'}>
-      <Stack direction={"row"} spacing={2}>
+    <Box pt={10} minHeight={"calc(100vh - 50px)"} sx={{width:'80%'}}>
+      <Stack direction={"row"} spacing={2} sx={{margin: '0 auto', maxWidth:'45%'}}>
         <Box
           sx={{
             minWidth: "250px",
