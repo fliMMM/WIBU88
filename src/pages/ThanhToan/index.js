@@ -9,6 +9,7 @@ import {
   MenuItem,
   Button,
   CircularProgress,
+  FormHelperText
 } from "@mui/material";
 import { Typography } from "@mui/material";
 import { AuthContext } from "../../context/AuthContext";
@@ -55,7 +56,7 @@ function ThanhToan() {
       fullname: "",
       phone: "",
       address: "",
-      paymentMethod: "",
+      paymentMethod: "COD",
     },
     onSubmit: async (values) => {
       const data = { products, ...values, totalPrice };
@@ -151,17 +152,18 @@ function ThanhToan() {
             </FormControl>
             <FormControl fullWidth style={{ marginTop: "20px" }}>
               <InputLabel
-                id="demo-simple-select-label"
+                id="paymentMethod"
                 style={{ marginTop: "-10px" }}
               >
                 Phương thức thanh toán
               </InputLabel>
               <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
+                labelId="paymentMethod"
+                id="paymentMethod"
                 value={formik.values.paymentMethod}
                 name="paymentMethod"
                 onChange={formik.handleChange}
+                
               >
                 <MenuItem value="COD">Thanh toán khi giao hàng (COD)</MenuItem>
                 <MenuItem value="MOMO">Ví Momo</MenuItem>
