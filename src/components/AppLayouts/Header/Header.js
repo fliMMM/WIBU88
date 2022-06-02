@@ -21,11 +21,18 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Header = () => {
   const [menu, setMenu] = useState(false);
-  const {amount} = useContext(CartContext);
+  const { amount } = useContext(CartContext);
   //const isMobile = useMediaQuery('(min-width:768px)');
   const handleMenu = () => {
     setMenu(!menu);
   };
+
+  const { getCartList } = useContext(CartContext);
+
+  const getQuantity = async ()=>{
+    await getCartList();
+  }
+  getQuantity();
 
   const {
     authState: { isAuthenticated, user },
@@ -76,7 +83,7 @@ const Header = () => {
               {/* <ShoppingCartOutlinedIcon style={{ marginRight: "5px" }} /> */}
               <IconButton aria-label="cart" style={{ marginRight: "15px" }}>
                 <StyledBadge badgeContent={amount} color="secondary">
-                  <ShoppingCartOutlinedIcon style={{ color: 'white' }}  />
+                  <ShoppingCartOutlinedIcon style={{ color: "white" }} />
                 </StyledBadge>
               </IconButton>
             </NavLink>

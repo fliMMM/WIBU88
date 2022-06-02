@@ -3,7 +3,6 @@ import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const Nav = styled.nav`
-  // background:#520709;
   background:#911131;
   height: 50px;
   display: flex;
@@ -41,6 +40,7 @@ export const Bars = styled(FaBars)`
 export const NavMenu = styled.div`
   display: flex;
   align-items: center;
+  
 
   @media screen and (max-width: 768px) {
     display: none;

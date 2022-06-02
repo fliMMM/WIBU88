@@ -13,6 +13,7 @@ import OrderHistory from "./pages/orderHistory";
 import Home from "./pages/Home/Home";
 import ProductDetail from "./pages/ProductDetail/ProductDetail";
 import ReadingTrial from "./pages/readingTrial";
+import { CartContext } from "./context/CartContext";
 const DangKi = React.lazy(() => import("./pages/DangKi/Dangki"));
 const DangNhap = React.lazy(() => import("./pages/DangNhap/Dangnhap"));
 const Cart = React.lazy(() => import("./pages/Cart/Cart"));
